@@ -10,6 +10,13 @@ test('Returns an array', t => {
   t.true(Array.isArray(replaceString('blah', 'blah', x => x)));
 });
 
+test('Works with matching groups', t => {
+  t.same(
+    replaceString('hey there', /(hey)/g, x => ({ worked: x })),
+    ['', { worked: 'hey' }, ' there']
+  );
+});
+
 test('Works with strings', t => {
   t.same(
     replaceString('hey there', 'hey', x => ({ worked: x })),
@@ -17,9 +24,14 @@ test('Works with strings', t => {
   );
 });
 
-test('Works with matching groups', t => {
+test('Successfully escapes parens in strings', t => {
   t.same(
-    replaceString('hey there', /(hey)/g, x => ({ worked: x })),
-    ['', { worked: 'hey' }, ' there']
+    replaceString('(hey) there', '(hey)', x => ({ worked: x })),
+    ['', { worked: '(hey)' }, ' there']
+  );
+
+  t.same(
+    replaceString('hey ((y)(you)) there', '((y)(you))', x => ({ worked: x })),
+    ['hey ', { worked: '((y)(you))' }, ' there']
   );
 });
