@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "String#replace for React components",
   "license": "MIT",
+  "main": "index.js",
   "repository": "iansinnott/react-string-replace",
   "author": {
     "name": "Ian Sinnott",
@@ -14,7 +15,12 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run -s lint && ava"
+    "test": "npm run -s lint && ava --verbose",
+    "bump:patch": "npm version patch -m \"v%s\"",
+    "bump:minor": "npm version minor -m \"v%s\"",
+    "bump": "npm run bump:patch",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags"
   },
   "files": [
     "index.js"
