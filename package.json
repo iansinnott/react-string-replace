@@ -1,0 +1,29 @@
+{
+  "name": "react-string-replace",
+  "version": "0.0.0",
+  "description": "My amazing module",
+  "license": "MIT",
+  "repository": "iansinnott/react-string-replace",
+  "author": {
+    "name": "Ian Sinnott",
+    "email": "ian@iansinnott.com",
+    "url": "github.com/iansinnott"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    ""
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "ava": "^0.8.0",
+    "xo": "^0.12.1"
+  }
+}
