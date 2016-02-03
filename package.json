@@ -1,7 +1,7 @@
 {
   "name": "react-string-replace",
-  "version": "0.0.0",
-  "description": "My amazing module",
+  "version": "0.1.0",
+  "description": "String#replace for React components",
   "license": "MIT",
   "repository": "iansinnott/react-string-replace",
   "author": {
@@ -10,7 +10,7 @@
     "url": "github.com/iansinnott"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12.0"
   },
   "scripts": {
     "test": "xo && ava"
@@ -19,11 +19,13 @@
     "index.js"
   ],
   "keywords": [
-    ""
+    "react",
+    "string",
+    "replace"
   ],
   "dependencies": {},
   "devDependencies": {
-    "ava": "^0.8.0",
+    "ava": "^0.11.0",
     "xo": "^0.12.1"
   }
 }
