@@ -27,9 +27,9 @@ var escapeRegExp = require('lodash.escaperegexp');
  * @param {function} fn
  * @return {array}
  */
-module.exports = function reactReplaceString(str, match, fn) {
+module.exports = function reactStringReplace(str, match, fn) {
   if (typeof str !== 'string' || !str) {
-    throw new TypeError('First argument to react-replace-string must be a non-empty string');
+    throw new TypeError('First argument to react-string-replace must be a non-empty string');
   }
 
   var re = match;
