@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
-import reactReplaceString from 'react-replace-string';
+import reactReplaceString from 'react-string-replace';
 
 const HighlightNumbers = React.createClass({
   propTypes: {
@@ -18,8 +18,7 @@ const HighlightNumbers = React.createClass({
   },
 });
 
-
-const content = `Hey my number is 555-555-5555.`;
+const content = 'Hey my number is 555-555-5555.';
 
 // Render the app
 render(<HighlightNumbers content={content} />, document.getElementById('root'));
