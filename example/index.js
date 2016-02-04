@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
+import reactReplaceString from 'react-replace-string';
 
-import reactReplaceString from '../';
-
-const Highlight = React.createClass({
+const HighlightNumbers = React.createClass({
   propTypes: {
     content: PropTypes.string.isRequired,
   },
@@ -11,9 +10,9 @@ const Highlight = React.createClass({
   render() {
     return (
       <div>
-        {reactReplaceString(this.props.content, )
-          <span className='highlight'>{x}</span>
-        }
+        {reactReplaceString(this.props.content, /(\d+)/g, (match, i) => (
+          <span key={i} style={{ color: 'red' }}>{match}</span>
+        ))}
       </div>
     );
   },
@@ -23,4 +22,4 @@ const Highlight = React.createClass({
 const content = `Hey my number is 555-555-5555.`;
 
 // Render the app
-render(<Highlight content={content} />, document.getElementById('root'));
+render(<HighlightNumbers content={content} />, document.getElementById('root'));
