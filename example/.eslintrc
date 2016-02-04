@@ -1,0 +1,44 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "rules": {
+
+    // Babel handles strict for us so it should never be manually added
+    "strict": [2, "never"],
+
+    // Single quotes on JSX components
+    "jsx-quotes": [2, "prefer-single"],
+
+    // Indent 2 spaces always
+    "indent": [2, 2],
+
+    // Omitting curly braces is fine as long as there is only one line under the
+    // statement
+    "curly": [2, "multi-or-nest"],
+
+    // Console can be useful and can also be stripped about by webpack in prod
+    "no-console": [0],
+
+    // Don't require a `new` keyword when calling capitalized functons. Ex:
+    // Immutable.Map({})
+    "new-cap": [2, { "capIsNew": false }],
+
+    // Having unsed args is allowed b/c its good for consistency and reminding
+    // what vars are available. Ex: (req, res, next) => res.send(/* ... */)
+    "no-unused-vars": [1, {"vars": "all", "args": "none"}],
+
+    // Allow multiple components in a single file
+    "react/no-multi-comp": [0],
+
+    // Do not require closing brackets to be on same line as opening brackets.
+    // This is good in theory but often very ugly when applied to a lone closing
+    // bracket of an opening tag:
+    // <div
+    //   someProp={true}
+    // >
+    // Or
+    // <div
+    //   someProp={true}>
+    "react/jsx-closing-bracket-location": [0],
+  },
+}
