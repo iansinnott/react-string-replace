@@ -8,26 +8,18 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import express from 'express';
 import webpack from 'webpack';
 
-import config from './webpack.config.dev.js';
+import config from './webpack.config.js';
 
-const Html = ({
-  title = 'Rainbow Unicorns',
-  bundle = '/app.js',
-  body = '',
-  favicon = '',
-  stylesheet = '',
-}) => (
+const Html = ({ bundle = '/app.js' }) => (
   <html lang='en'>
     <head>
       <meta charSet='utf-8' />
       <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />
-      <title>{title}</title>
-      {favicon && <link rel='shortcut icon' href={favicon} />}
-      {stylesheet && <link rel='stylesheet' href={stylesheet} />}
+      <title>React String Replace Example</title>
     </head>
     <body>
-      <div id='root' dangerouslySetInnerHTML={{ __html: body }} />
+      <div id='root' />
       <script src={bundle} />
     </body>
   </html>
