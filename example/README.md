@@ -1,6 +1,6 @@
-# Highlight Strings
+# Highlight Numbers
 
-A simple example of using `reactReplaceString` to highlight numbers in a rendered text string.
+A very simple example of using `reactReplaceString` to highlight numbers in a rendered text string.
 
 **Quick Start:**
 

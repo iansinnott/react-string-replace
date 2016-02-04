@@ -1,4 +1,4 @@
-/* eslint-disable no-var */
+/* eslint-disable no-var, prefer-template */
 var path = require('path');
 var webpack = require('webpack');
 
@@ -10,16 +10,10 @@ var webpack = require('webpack');
 // https://github.com/glenjamin/webpack-hot-middleware/issues/37
 var DEV_PORT = process.env.DEV_PORT || 3000;
 var DEV_HOST = '//localhost:' + DEV_PORT + '/';
-var HMR_HOST = DEV_HOST + '__webpack_hmr';
 
 module.exports = {
-  devtool: 'inline-source-map',
-
   entry: {
-    app: [
-      'webpack-hot-middleware/client?path=' + HMR_HOST,
-      './index.js',
-    ],
+    app: './index.js',
   },
 
   output: {
@@ -29,7 +23,6 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
   ],
 

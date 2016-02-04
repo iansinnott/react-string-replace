@@ -11,9 +11,7 @@
   "devDependencies": {
     "babel": "^5.8.34",
     "babel-core": "^5.4.7",
-    "babel-eslint": "^4.1.6",
     "babel-loader": "^5.1.2",
-    "babel-plugin-react-transform": "^1.1.1",
     "express": "^4.13.3",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
@@ -23,7 +21,6 @@
     "redbox-react": "^1.2.0",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
-    "webpack-hot-middleware": "^2.6.0",
     "react-string-replace": "*"
   },
   "dependencies": {}

@@ -48,7 +48,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath,
 }));
 
-app.use(require('webpack-hot-middleware')(compiler));
+// app.use(require('webpack-hot-middleware')(compiler));
 
 // Send the boilerplate HTML payload down for all get requests. Routing will be
 // handled entirely client side and we don't make an effort to pre-render pages

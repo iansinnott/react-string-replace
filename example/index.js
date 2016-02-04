@@ -10,6 +10,7 @@ const HighlightNumbers = React.createClass({
   render() {
     return (
       <div>
+        <h1>Highlight Numbers</h1>
         {reactReplaceString(this.props.content, /(\d+)/g, (match, i) => (
           <span key={i} style={{ color: 'red' }}>{match}</span>
         ))}
