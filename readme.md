@@ -1,7 +1,11 @@
-# react-string-replace [![Build Status](https://travis-ci.org/iansinnott/react-string-replace.svg?branch=master)](https://travis-ci.org/iansinnott/react-string-replace)
+# react-string-replace
 
-> My amazing module
+[![Build Status](https://img.shields.io/circleci/project/iansinnott/react-string-replace.svg)](https://circleci.com/gh/iansinnott/react-string-replace)
+[![react-string-replace.js on NPM](https://img.shields.io/npm/v/react-string-replace.svg)](https://www.npmjs.com/package/react-string-replace)
 
+React String Replace
+
+> Aka turn a string into an array <span> tags
 
 ## Install
 
@@ -14,6 +18,8 @@ $ npm install --save react-string-replace
 
 ```js
 const reactStringReplace = require('react-string-replace');
+
+
 
 reactStringReplace('unicorns');
 //=> 'unicorns & rainbows'
