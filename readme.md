@@ -30,7 +30,7 @@ reactStringReplace('whats your name', 'your', (match, i) => (
 
 Highlight all digits within a string by surrounding them in span tags:
 
-```
+```js
 reactStringReplace('Apt 111, phone number 5555555555.', /(\d+)/g, (match, i) => (
   <span key={i} style={{ color: 'red' }}>{match}</span>
 ));
