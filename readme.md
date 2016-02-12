@@ -5,7 +5,7 @@
 
 React String Replace
 
-> Aka turn a string into an array <span> tags
+> Aka turn a string into an array of `<span>` tags
 
 ## Install
 
