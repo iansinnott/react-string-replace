@@ -105,7 +105,7 @@ See the `example/` directory for a runnable example.
 
 ## Why?
 
-I wanted an easy way to highlight strings within React **without** breaking React's built in string escaping mechanisms. This meant actual string replacement combined with `dangerouslySetInnerHTML` was out of the question.
+I wanted an easy way to do string replacement a la `String.prototype.replace` within React components **without** breaking React's built in string escaping functionality. This meant standard string replacement combined with `dangerouslySetInnerHTML` was out of the question.
 
 ## API
 
