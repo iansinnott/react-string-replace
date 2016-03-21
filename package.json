@@ -32,7 +32,10 @@
   ],
   "dependencies": {
     "lodash.escaperegexp": "^4.0.2",
-    "lodash.isregexp": "^3.0.5"
+    "lodash.flatten": "^4.1.0",
+    "lodash.isarray": "^4.0.0",
+    "lodash.isregexp": "^3.0.5",
+    "lodash.isstring": "^4.0.1"
   },
   "devDependencies": {
     "ava": "^0.11.0",
