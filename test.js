@@ -24,6 +24,14 @@ test('Works with strings', t => {
   );
 });
 
+test('Works with arrays', t => {
+  const input = ['hey there', { value: 'you' }, 'again'];
+  t.same(
+    replaceString(input, 'hey', x => ({ worked: x })),
+    ['', { worked: 'hey' }, ' there', { value: 'you' }, 'again']
+  );
+});
+
 test('Successfully escapes parens in strings', t => {
   t.same(
     replaceString('(hey) there', '(hey)', x => ({ worked: x })),
@@ -34,4 +42,48 @@ test('Successfully escapes parens in strings', t => {
     replaceString('hey ((y)(you)) there', '((y)(you))', x => ({ worked: x })),
     ['hey ', { worked: '((y)(you))' }, ' there']
   );
+});
+
+test('Can be called consecutively on returned result of previous call', t => {
+  const originalTweet = 'Hey @iansinnott, check this link https://github.com/iansinnott/ #github';
+  let reactReplacedTweet;
+
+  // Match URLs
+  reactReplacedTweet = replaceString(originalTweet, /(https?:\/\/\S+)/g, match => (
+    { type: 'url', value: match }
+  ));
+
+  t.same(reactReplacedTweet, [
+    'Hey @iansinnott, check this link ',
+    { type: 'url', value: 'https://github.com/iansinnott/' },
+    ' #github',
+  ]);
+
+  // Match @-mentions
+  reactReplacedTweet = replaceString(reactReplacedTweet, /(@\w+)/g, match => (
+    { type: 'mention', value: match }
+  ));
+
+  t.same(reactReplacedTweet, [
+    'Hey ',
+    { type: 'mention', value: '@iansinnott' },
+    ', check this link ',
+    { type: 'url', value: 'https://github.com/iansinnott/' },
+    ' #github',
+  ]);
+
+  // Match hashtags
+  reactReplacedTweet = replaceString(reactReplacedTweet, /(#\w+)/g, match => (
+    { type: 'hashtag', value: match }
+  ));
+
+  t.same(reactReplacedTweet, [
+    'Hey ',
+    { type: 'mention', value: '@iansinnott' },
+    ', check this link ',
+    { type: 'url', value: 'https://github.com/iansinnott/' },
+    ' ',
+    { type: 'hashtag', value: '#github' },
+    '',
+  ]);
 });
