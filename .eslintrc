@@ -1,3 +1,10 @@
 {
-  "extends": "airbnb/base"
+  "extends": "airbnb/base",
+  "rules": {
+    "no-param-reassign": [0],
+    "max-len": [0],
+    "prefer-arrow-callback": [0],
+    "space-before-function-paren": [0],
+    "func-names": [0],
+  }
 }
