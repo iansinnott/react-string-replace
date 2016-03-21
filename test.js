@@ -45,7 +45,7 @@ test('Successfully escapes parens in strings', t => {
 });
 
 test('Can be called consecutively on returned result of previous call', t => {
-  const originalTweet = 'Hey @iansinnott, check this link https://github.com/iansinnott/ #github';
+  const originalTweet = 'Hey @iansinnott, check out this link https://github.com/iansinnott/ Hope to see you at #reactconf';
   let reactReplacedTweet;
 
   // Match URLs
@@ -54,9 +54,9 @@ test('Can be called consecutively on returned result of previous call', t => {
   ));
 
   t.same(reactReplacedTweet, [
-    'Hey @iansinnott, check this link ',
+    'Hey @iansinnott, check out this link ',
     { type: 'url', value: 'https://github.com/iansinnott/' },
-    ' #github',
+    ' Hope to see you at #reactconf',
   ]);
 
   // Match @-mentions
@@ -67,9 +67,9 @@ test('Can be called consecutively on returned result of previous call', t => {
   t.same(reactReplacedTweet, [
     'Hey ',
     { type: 'mention', value: '@iansinnott' },
-    ', check this link ',
+    ', check out this link ',
     { type: 'url', value: 'https://github.com/iansinnott/' },
-    ' #github',
+    ' Hope to see you at #reactconf',
   ]);
 
   // Match hashtags
@@ -80,10 +80,10 @@ test('Can be called consecutively on returned result of previous call', t => {
   t.same(reactReplacedTweet, [
     'Hey ',
     { type: 'mention', value: '@iansinnott' },
-    ', check this link ',
+    ', check out this link ',
     { type: 'url', value: 'https://github.com/iansinnott/' },
-    ' ',
-    { type: 'hashtag', value: '#github' },
+    ' Hope to see you at ',
+    { type: 'hashtag', value: '#reactconf' },
     '',
   ]);
 });
