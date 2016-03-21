@@ -92,7 +92,7 @@ replacedText = replaceString(replacedText, /#(\w+)/g, match => (
 //   'Hey ',
 //   <a href='https://twitter.com/ian_989'>@ian_989</a>
 //   ', check out this link ',
-//   <a href='https://github.com/iansinnott/'>{https://github.com/iansinnott/}</a>,
+//   <a href='https://github.com/iansinnott/'>https://github.com/iansinnott/</a>,
 //   '. Hope to see you at ',
 //   <a href='https://twitter.com/hashtag/reactconf'>#reactconf</a>,
 //   '',
