@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
-import reactReplaceString from 'react-string-replace';
+import reactStringReplace from 'react-string-replace';
 
 const Demo = React.createClass({
   propTypes: {
@@ -18,17 +18,17 @@ const Demo = React.createClass({
     let replacedText;
 
     // Match URLs
-    replacedText = reactReplaceString(text, /(https?:\/\/\S+)/g, match => (
+    replacedText = reactStringReplace(text, /(https?:\/\/\S+)/g, match => (
       <a key={match} href={match}>{match}</a>
     ));
 
     // Match @-mentions
-    replacedText = reactReplaceString(replacedText, /@(\w+)/g, match => (
+    replacedText = reactStringReplace(replacedText, /@(\w+)/g, match => (
       <a key={match} href={`https://twitter.com/${match}`}>@{match}</a>
     ));
 
     // Match hashtags
-    replacedText = reactReplaceString(replacedText, /#(\w+)/g, match => (
+    replacedText = reactStringReplace(replacedText, /#(\w+)/g, match => (
       <a key={match} href={`https://twitter.com/hashtag/${match}`}>#{match}</a>
     ));
 
