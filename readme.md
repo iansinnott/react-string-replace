@@ -101,7 +101,7 @@ replacedText = replaceString(replacedText, /#(\w+)/g, match => (
 
 ### Full Example
 
-See the `example/` directory for a runnable example.
+See the [`example/`](https://github.com/iansinnott/react-string-replace/tree/master/example) directory for a runnable example.
 
 ## Why?
 

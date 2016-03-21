@@ -1,6 +1,6 @@
-# Highlight Numbers
+# React String Replace Demo
 
-A very simple example of using `reactReplaceString` to highlight numbers in a rendered text string.
+An example of using `reactStringReplace` to add links to URLs, @-mentions and hashtags in a string.
 
 **Quick Start:**
 
