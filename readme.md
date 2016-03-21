@@ -63,6 +63,42 @@ const HighlightNumbers = React.createClass({
 });
 ```
 
+### Multiple replacements on a single string
+
+You can run multiple replacements on one string by calling the function multiple times on the returned result. For instance, if we want to match URLs, @-mentions and hashtags in a string we could do the following:
+
+```js
+const reactStringReplace = require('react-string-replace')
+
+const text = 'Hey @ian_989, check out this link https://github.com/iansinnott/. Hope to see you at #reactconf';
+let replacedText;
+
+// Match URLs
+replacedText = replaceString(originalTweet, /(https?:\/\/\S+)/g, match => (
+  <a href={match}>{match}</a>
+));
+
+// Match @-mentions
+replacedText = replaceString(replacedText, /@(\w+)/g, match => (
+  <a href={`https://twitter.com/${match}`}>@{match}</a>
+));
+
+// Match hashtags
+replacedText = replaceString(replacedText, /#(\w+)/g, match => (
+  <a href={`https://twitter.com/hashtag/${match}`}>#{match}</a>
+));
+
+// => [
+//   'Hey ',
+//   <a href='https://twitter.com/ian_989'>@ian_989</a>
+//   ', check out this link ',
+//   <a href='https://github.com/iansinnott/'>{https://github.com/iansinnott/}</a>,
+//   '. Hope to see you at ',
+//   <a href='https://twitter.com/hashtag/reactconf'>#reactconf</a>,
+//   '',
+// ];
+```
+
 ### Full Example
 
 See the `example/` directory for a runnable example.
@@ -77,9 +113,11 @@ I wanted an easy way to highlight strings within React **without** breaking Reac
 
 #### string
 
-Type: `string`
+Type: `string|array`
 
-The string you would like to do replacement on.
+The string or array you would like to do replacement on.
+
+**NOTE:** When passed an array this is the same as running the replacement on every string within the array. Any non-string values in the array will be left untouched.
 
 #### match
 
