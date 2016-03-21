@@ -70,11 +70,11 @@ You can run multiple replacements on one string by calling the function multiple
 ```js
 const reactStringReplace = require('react-string-replace')
 
-const text = 'Hey @ian_989, check out this link https://github.com/iansinnott/. Hope to see you at #reactconf';
+const text = 'Hey @ian_989, check out this link https://github.com/iansinnott/ Hope to see you at #reactconf';
 let replacedText;
 
 // Match URLs
-replacedText = replaceString(originalTweet, /(https?:\/\/\S+)/g, match => (
+replacedText = replaceString(text, /(https?:\/\/\S+)/g, match => (
   <a href={match}>{match}</a>
 ));
 
