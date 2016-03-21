@@ -3,6 +3,9 @@
 
 var isRegExp = require('lodash.isregexp');
 var escapeRegExp = require('lodash.escaperegexp');
+var isString = require('lodash.isstring');
+var isArray = require('lodash.isarray');
+var flatten = require('lodash.flatten');
 
 /**
  * Given a string, replace every substring that is matched by the `match` regex
@@ -27,9 +30,9 @@ var escapeRegExp = require('lodash.escaperegexp');
  * @param {function} fn
  * @return {array}
  */
-module.exports = function reactStringReplace(str, match, fn) {
+function replaceString(str, match, fn) {
   if (typeof str !== 'string' || !str) {
-    throw new TypeError('First argument to react-string-replace must be a non-empty string');
+    throw new TypeError('First argument to react-string-replace#replaceString must be a string');
   }
 
   var re = match;
@@ -46,4 +49,18 @@ module.exports = function reactStringReplace(str, match, fn) {
   }
 
   return result;
+}
+
+module.exports = function reactStringReplace(str, match, fn) {
+  if (isString(str)) {
+    str = [str];
+  }
+
+  if (!isArray(str) || !str[0]) {
+    throw new TypeError('First argument to react-string-replace must be an array or non-empty string');
+  }
+
+  return flatten(str.map(function(x) {
+    return isString(x) ? replaceString(x, match, fn) : x;
+  }));
 };
