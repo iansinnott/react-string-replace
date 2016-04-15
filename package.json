@@ -15,7 +15,7 @@
   },
   "scripts": {
     "lint": "eslint --ignore-pattern example .",
-    "test": "npm run -s lint && ava --verbose",
+    "test": "npm run lint && ava --verbose",
     "bump:patch": "npm version patch -m \"v%s\"",
     "bump:minor": "npm version minor -m \"v%s\"",
     "bump": "npm run bump:patch",
@@ -31,15 +31,15 @@
     "replace"
   ],
   "dependencies": {
-    "lodash.escaperegexp": "^4.0.2",
-    "lodash.flatten": "^4.1.0",
+    "lodash.escaperegexp": "^4.1.1",
+    "lodash.flatten": "^4.2.0",
     "lodash.isarray": "^4.0.0",
     "lodash.isregexp": "^3.0.5",
     "lodash.isstring": "^4.0.1"
   },
   "devDependencies": {
-    "ava": "^0.11.0",
-    "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^4.0.0"
+    "ava": "^0.14.0",
+    "eslint": "^2.8.0",
+    "eslint-config-airbnb": "^7.0.0"
   }
 }
