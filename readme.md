@@ -70,7 +70,7 @@ You can run multiple replacements on one string by calling the function multiple
 ```js
 const reactStringReplace = require('react-string-replace')
 
-const text = 'Hey @ian_989, check out this link https://github.com/iansinnott/ Hope to see you at #reactconf';
+const text = 'Hey @ian_sinn, check out this link https://github.com/iansinnott/ Hope to see you at #reactconf';
 let replacedText;
 
 // Match URLs
@@ -90,7 +90,7 @@ replacedText = replaceString(replacedText, /#(\w+)/g, match => (
 
 // => [
 //   'Hey ',
-//   <a href='https://twitter.com/ian_989'>@ian_989</a>
+//   <a href='https://twitter.com/ian_sinn'>@ian_sinn</a>
 //   ', check out this link ',
 //   <a href='https://github.com/iansinnott/'>https://github.com/iansinnott/</a>,
 //   '. Hope to see you at ',

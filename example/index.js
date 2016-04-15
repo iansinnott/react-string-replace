@@ -14,7 +14,7 @@ const Demo = React.createClass({
    * cannot use `key={i}` because all three JSX tags could get the same key.
    */
   render() {
-    const text = 'Hey @ian_989, check out this link https://github.com/iansinnott/ Hope to see you at #reactconf';
+    const text = 'Hey @ian_sinn, check out this link https://github.com/iansinnott/ Hope to see you at #reactconf';
     let replacedText;
 
     // Match URLs
