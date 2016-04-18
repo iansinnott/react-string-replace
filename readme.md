@@ -74,18 +74,18 @@ const text = 'Hey @ian_sinn, check out this link https://github.com/iansinnott/ 
 let replacedText;
 
 // Match URLs
-replacedText = reactStringReplace(text, /(https?:\/\/\S+)/g, match => (
-  <a key={match} href={match}>{match}</a>
+replacedText = reactStringReplace(text, /(https?:\/\/\S+)/g, (match, i) => (
+  <a key={match + i} href={match}>{match}</a>
 ));
 
 // Match @-mentions
-replacedText = reactStringReplace(replacedText, /@(\w+)/g, match => (
-  <a key={match} href={`https://twitter.com/${match}`}>@{match}</a>
+replacedText = reactStringReplace(replacedText, /@(\w+)/g, (match, i) => (
+  <a key={match + i} href={`https://twitter.com/${match}`}>@{match}</a>
 ));
 
 // Match hashtags
-replacedText = reactStringReplace(replacedText, /#(\w+)/g, match => (
-  <a key={match} href={`https://twitter.com/hashtag/${match}`}>#{match}</a>
+replacedText = reactStringReplace(replacedText, /#(\w+)/g, (match, i) => (
+  <a key={match + i} href={`https://twitter.com/hashtag/${match}`}>#{match}</a>
 ));
 
 // => [
