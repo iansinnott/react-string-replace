@@ -1,6 +1,6 @@
 {
   "name": "react-string-replace",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "String#replace for React components",
   "license": "MIT",
   "main": "index.js",
