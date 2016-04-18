@@ -31,7 +31,9 @@ var flatten = require('lodash.flatten');
  * @return {array}
  */
 function replaceString(str, match, fn) {
-  if (typeof str !== 'string' || !str) {
+  if (str === '') {
+    return str;
+  } else if (!str || !isString(str)) {
     throw new TypeError('First argument to react-string-replace#replaceString must be a string');
   }
 
