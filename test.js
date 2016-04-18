@@ -1,9 +1,9 @@
 import test from 'ava';
 import replaceString from './';
 
-test('Throws if not given a non-empty string', t => {
-  t.throws(() => replaceString());
-  t.throws(() => replaceString(''));
+test("Doesn't throw if not given invalid input", t => {
+  t.notThrows(() => replaceString());
+  t.notThrows(() => replaceString(''));
 });
 
 test('Returns an array', t => {
@@ -119,4 +119,25 @@ test('Allows empty strings within results', t => {
     { key: 'image', match: 'http://a_photo.jpg' },
     '',
   ]);
+});
+
+test('Will not through if first element of input is empty string', t => {
+  const string = 'http://a_photo.jpg some string';
+  const replacedContent = replaceString(string, /(http?:\/\/.*\.(?:png|jpg))/g, match => {
+    return { key: 'image', match };
+  });
+
+  t.deepEqual(replacedContent, [
+    '',
+    { key: 'image', match: 'http://a_photo.jpg' },
+    ' some string',
+  ]);
+
+  // This replacement would not actually give a new result from above, but it is
+  // simply to test that passing in an empty string as the first arg is OK
+  t.notThrows(() => {
+    replaceString(replacedContent, /@(\w+)/g, match => {
+      return { key: 'text', match };
+    });
+  });
 });
