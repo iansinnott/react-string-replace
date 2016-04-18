@@ -53,16 +53,10 @@ function replaceString(str, match, fn) {
   return result;
 }
 
-module.exports = function reactStringReplace(str, match, fn) {
-  if (isString(str)) {
-    str = [str];
-  }
+module.exports = function reactStringReplace(source, match, fn) {
+  if (!isArray(source)) source = [source];
 
-  if (!isArray(str) || !str[0]) {
-    throw new TypeError('First argument to react-string-replace must be an array or non-empty string');
-  }
-
-  return flatten(str.map(function(x) {
+  return flatten(source.map(function(x) {
     return isString(x) ? replaceString(x, match, fn) : x;
   }));
 };
