@@ -54,7 +54,7 @@ const HighlightNumbers = React.createClass({
     const content = 'Hey my number is 555-555-5555.';
     return (
       <div>
-        {reactStringReplace(this.props.content, /(\d+)/g, (match, i) => (
+        {reactStringReplace(content, /(\d+)/g, (match, i) => (
           <span key={i} style={{ color: 'red' }}>{match}</span>
         ))}
       </div>
