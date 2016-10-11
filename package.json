@@ -33,11 +33,11 @@
   "dependencies": {
     "lodash.escaperegexp": "^4.1.1",
     "lodash.flatten": "^4.2.0",
-    "lodash.isregexp": "^3.0.5",
+    "lodash.isregexp": "^4.0.1",
     "lodash.isstring": "^4.0.1"
   },
   "devDependencies": {
-    "ava": "^0.14.0",
+    "ava": "^0.16.0",
     "eslint": "^2.8.0",
     "eslint-config-airbnb": "^7.0.0"
   }
