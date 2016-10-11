@@ -1,6 +1,4 @@
 /* eslint-disable vars-on-top, no-var, prefer-template */
-'use strict';
-
 var isRegExp = require('lodash.isregexp');
 var escapeRegExp = require('lodash.escaperegexp');
 var isString = require('lodash.isstring');
