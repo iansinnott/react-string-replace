@@ -4,7 +4,6 @@
 var isRegExp = require('lodash.isregexp');
 var escapeRegExp = require('lodash.escaperegexp');
 var isString = require('lodash.isstring');
-var isArray = require('lodash.isarray');
 var flatten = require('lodash.flatten');
 
 /**
@@ -54,7 +53,7 @@ function replaceString(str, match, fn) {
 }
 
 module.exports = function reactStringReplace(source, match, fn) {
-  if (!isArray(source)) source = [source];
+  if (!Array.isArray(source)) source = [source];
 
   return flatten(source.map(function(x) {
     return isString(x) ? replaceString(x, match, fn) : x;
