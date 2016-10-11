@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb/base",
+  "extends": "airbnb-base",
   "rules": {
     "lines-around-directive": [0],
     "arrow-parens": [0],
