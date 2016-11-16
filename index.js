@@ -28,6 +28,9 @@ var flatten = require('lodash.flatten');
  * @return {array}
  */
 function replaceString(str, match, fn) {
+  var curCharStart = 0;
+  var curCharLen = 0;
+
   if (str === '') {
     return str;
   } else if (!str || !isString(str)) {
@@ -44,7 +47,10 @@ function replaceString(str, match, fn) {
 
   // Apply fn to all odd elements
   for (var i = 1, length = result.length; i < length; i += 2) {
-    result[i] = fn(result[i], i);
+    curCharLen = result[i].length;
+    curCharStart += result[i - 1].length;
+    result[i] = fn(result[i], i, curCharStart);
+    curCharStart += curCharLen;
   }
 
   return result;
