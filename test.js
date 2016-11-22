@@ -11,6 +11,14 @@ test('Returns an array', t => {
   t.true(Array.isArray(replaceString('blah', 'blah', x => x)));
 });
 
+test('Returns correct character offsets', t => {
+  const correctOffsets = [6, 17];
+  const charOffsets = [];
+
+  replaceString('Hey there, stranger', 'er', (m, i, o) => charOffsets.push(o));
+  t.deepEqual(charOffsets, correctOffsets);
+});
+
 test('Works with matching groups', t => {
   t.deepEqual(
     replaceString('hey there', /(hey)/g, x => ({ worked: x })),
