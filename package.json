@@ -37,7 +37,7 @@
     "lodash.isstring": "^4.0.1"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
+    "ava": "^0.17.0",
     "babel-eslint": "^7.1.1",
     "eslint": "^3.10.2",
     "eslint-config-iansinnott": "^1.0.1",
