@@ -14,7 +14,7 @@
     "node": ">=0.12.0"
   },
   "scripts": {
-    "lint": "eslint --ignore-pattern example .",
+    "lint": "eslint --ignore-pattern example index.js",
     "test": "npm run lint && ava --verbose",
     "bump:patch": "npm version patch -m \"v%s\"",
     "bump:minor": "npm version minor -m \"v%s\"",
@@ -38,8 +38,11 @@
   },
   "devDependencies": {
     "ava": "^0.16.0",
-    "eslint": "^3.7.1",
-    "eslint-config-airbnb-base": "^8.0.0",
-    "eslint-plugin-import": "1.16.0"
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.10.2",
+    "eslint-config-iansinnott": "^1.0.1",
+    "eslint-config-zen": "^2.0.0",
+    "eslint-plugin-flowtype": "^2.25.0",
+    "eslint-plugin-react": "^6.7.1"
   }
 }
