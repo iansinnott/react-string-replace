@@ -3,7 +3,8 @@
 [![Build Status](https://img.shields.io/circleci/project/iansinnott/react-string-replace.svg)](https://circleci.com/gh/iansinnott/react-string-replace)
 [![react-string-replace.js on NPM](https://img.shields.io/npm/v/react-string-replace.svg)](https://www.npmjs.com/package/react-string-replace)
 
-A simple way to safely do string replacement with React components
+A simple way to safely do string replacement with React components.
+Current version follows the API of: [String.prototype.replace()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
 
 > Aka turn a string into an array of React components
 
@@ -13,6 +14,23 @@ A simple way to safely do string replacement with React components
 $ npm install --save react-string-replace
 ```
 
+## API reactStringReplace(text, pattern, replacer)
+
+### text(String)
+String to replace the patterns within.
+
+### pattern(regex|substr)
+Pattern to find and replace with `replacer` function.
+
+### replacer(function(match, p1, ..., pN, offset, originalText))
+Function that will trigger on each pattern match. The `match` argument is the group of characters matching the whole pattern segment.
+
+The `p1 ... pN` arguments are matches for each provided regex pattern group. 
+The `offset` is a start character position of the `match` in original string. 
+The `originalText` is our original string. 
+
+### Returns
+Array of React renderable components.
 
 ## Usage
 
@@ -20,7 +38,7 @@ $ npm install --save react-string-replace
 
 ```js
 const reactStringReplace = require('react-string-replace')
-reactStringReplace('whats your name', 'your', (match, i) => (
+reactStringReplace('whats your name', 'your', (match, part, offset) => (
   <span>{match}</span>
 ));
 // => [ 'whats ', <span>your</span>, ' name' ]
@@ -31,8 +49,8 @@ reactStringReplace('whats your name', 'your', (match, i) => (
 Highlight all digits within a string by surrounding them in span tags:
 
 ```js
-reactStringReplace('Apt 111, phone number 5555555555.', /(\d+)/g, (match, i) => (
-  <span key={i} style={{ color: 'red' }}>{match}</span>
+reactStringReplace('Apt 111, phone number 5555555555.', /(\d+)/g, (match, part, offset) => (
+  <span key={offset} style={{ color: 'red' }}>{match}</span>
 ));
 // =>
 // [
@@ -54,8 +72,8 @@ const HighlightNumbers = React.createClass({
     const content = 'Hey my number is 555-555-5555.';
     return (
       <div>
-        {reactStringReplace(content, /(\d+)/g, (match, i) => (
-          <span key={i} style={{ color: 'red' }}>{match}</span>
+        {reactStringReplace(content, /(\d+)/g, (match, part, offset) => (
+          <span key={offset} style={{ color: 'red' }}>{match}</span>
         ))}
       </div>
     );

@@ -15,13 +15,15 @@ test('Returns correct character offsets', t => {
   const correctOffsets = [6, 17];
   const charOffsets = [];
 
-  replaceString('Hey there, stranger', 'er', (m, i, o) => charOffsets.push(o));
+  replaceString('Hey there, stranger', 'er', (m, p1, o) => charOffsets.push(o));
   t.deepEqual(charOffsets, correctOffsets);
 });
 
 test('Works with matching groups', t => {
+  const result = replaceString('hey there', /(hey)/g, x => ({ worked: x }));
+
   t.deepEqual(
-    replaceString('hey there', /(hey)/g, x => ({ worked: x })),
+    result,
     ['', { worked: 'hey' }, ' there']
   );
 });
@@ -38,6 +40,37 @@ test('Works with arrays', t => {
   t.deepEqual(
     replaceString(input, 'hey', x => ({ worked: x })),
     ['', { worked: 'hey' }, ' there', { value: 'you' }, 'again']
+  );
+});
+
+// Refer to #6, addressing API compatibility with String.prototype.replace()
+test('Allows direct string substitution', t => {
+  t.deepEqual(
+    replaceString('hey there', 'there', 'friend'),
+    ['hey ', 'friend', '']
+  );
+});
+
+// Refer to #6, which helps us to extract the matching pattern groups
+test('Extracts matching group parts', t => {
+  const originalString = 'Hey @pejrak, enjoy the use of https://github.com/iansinnott/react-string-replace - the best #react #stringreplacement #npmpackage';
+  const resultRegister = { userParts: [], hashtagParts: [], urlParts: [] };
+  const expectedRegister = {
+    userParts: ['@pejrak'],
+    hashtagParts: ['#react', '#stringreplacement', '#npmpackage'],
+    urlParts: ['https://github.com/iansinnott/react-string-replace']
+  };
+  const replacedContent = replaceString(
+    originalString, /\s(@\w+)|\s(#\w+)|(https?:\/\/\S+)/g, 
+  (match, userPart, hashtagPart, urlPart, offset) => {
+    if (userPart) resultRegister.userParts.push(userPart);
+    if (hashtagPart) resultRegister.hashtagParts.push(hashtagPart);
+    if (urlPart) resultRegister.urlParts.push(urlPart);
+  });
+
+  t.deepEqual(
+    resultRegister,
+    expectedRegister
   );
 });
 
@@ -106,28 +139,31 @@ test('Can be called consecutively on returned result of previous call', t => {
 test('Allows empty strings within results', t => {
   let replacedContent;
   const string = '@username http://a_photo.jpg';
+  const compareFirst = [
+    '@username ',
+    { key: 'image', match: 'http://a_photo.jpg' },
+    '',
+  ];
 
   replacedContent = replaceString(string, /(http?:\/\/.*\.(?:png|jpg))/g, match => {
     return { key: 'image', match };
   });
 
-  t.deepEqual(replacedContent, [
-    '@username ',
-    { key: 'image', match: 'http://a_photo.jpg' },
-    '',
-  ]);
+  t.deepEqual(replacedContent, compareFirst);
 
-  replacedContent = replaceString(replacedContent, /@(\w+)/g, match => {
-    return { key: 'text', match };
+  replacedContent = replaceString(replacedContent, /@(\w+)/g, (match, p1) => {
+    return { key: 'text', match: p1 };
   });
 
-  t.deepEqual(replacedContent, [
+  const compareSecond = [
     '',
     { key: 'text', match: 'username' },
     ' ',
     { key: 'image', match: 'http://a_photo.jpg' },
     '',
-  ]);
+  ];
+
+  t.deepEqual(replacedContent, compareSecond);
 });
 
 test('Will not through if first element of input is empty string', t => {
