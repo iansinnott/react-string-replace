@@ -14,23 +14,51 @@ Current version follows the API of: [String.prototype.replace()](https://develop
 $ npm install --save react-string-replace
 ```
 
-## API reactStringReplace(text, pattern, replacer)
+## API
 
-### text(String)
+### reactStringReplace(text, pattern, replacer)
+
+### Returns
+Array of React renderable components.
+
+### text
+Type: `(string|array)`
+
 String to replace the patterns within.
 
-### pattern(regex|substr)
-Pattern to find and replace with `replacer` function.
+**NOTE:** When passed an array this is the same as running the replacement on every string within the array. Any non-string values in the array will be left untouched.
 
-### replacer(function(match, p1, ..., pN, offset, originalText))
-Function that will trigger on each pattern match. The `match` argument is the group of characters matching the whole pattern segment.
+### pattern
+Type: `(regex|substr)`
+
+The string or RegExp pattern you would like to replace within `text`. Note that when using a `RegExp` you **MUST** include a matching group.
+
+### replacer
+Type: `(function(match, p1, ..., pN, offset, originalText))`
+
+Function that will trigger on each pattern match. The `match` argument is the group of characters matching the whole provided pattern.
 
 The `p1 ... pN` arguments are matches for each provided regex pattern group. 
 The `offset` is a start character position of the `match` in original string. 
 The `originalText` is our original string. 
 
-### Returns
-Array of React renderable components.
+## Example 1
+
+Replace all occurrences of `'hey'` with `<span>hey</span>`
+
+```js
+const reactStringReplace = require('react-string-replace')
+const replacer = (match, part, offset) => <span key={offset}>{match}</span>;
+reactStringReplace('hey hey you', /(hey)/g, replacer);
+```
+
+## Example 2
+
+```js
+const reactStringReplace = require('react-string-replace')
+const replacer = (match, part, offset) => <span key={offset}>{match}</span>;
+reactStringReplace('hey hey you', /(hey)/g, replacer);
+```
 
 ## Usage
 
@@ -46,11 +74,17 @@ reactStringReplace('whats your name', 'your', (match, part, offset) => (
 
 ### More realistic example
 
-Highlight all digits within a string by surrounding them in span tags:
+Highlight all digits and URLs within a string by surrounding them in span or anchor tags:
 
 ```js
-reactStringReplace('Apt 111, phone number 5555555555.', /(\d+)/g, (match, part, offset) => (
-  <span key={offset} style={{ color: 'red' }}>{match}</span>
+const text = 'Apt 111, phone number 5555555555, web: https://www.replaced.com';
+
+reactStringReplace(, /\s(\d+)|(https?:\/\/\S+)/g, (match, numberPart, urlPart, offset) => (
+  urlPart ? (
+    <a key={offset} href={urlPart}>{urlPart}</a>
+  ) : (
+    <span key={offset} style={{ color: 'red' }}>{numberPart}</span>
+  )
 ));
 // =>
 // [
@@ -58,7 +92,8 @@ reactStringReplace('Apt 111, phone number 5555555555.', /(\d+)/g, (match, part, 
 //   <span style={{ color: 'red' }}>111</span>,
 //   ', phone number ',
 //   <span style={{ color: 'red' }}>5555555555</span>,
-//   '.'
+//   ', web: ',
+//   <a href='https://www.replaced.com'>https://www.replaced.com</a>  
 // ]
 ```
 
@@ -141,24 +176,8 @@ The string or array you would like to do replacement on.
 
 Type: `regexp|string`
 
-The string or RegExp you would like to replace within `string`. Note that when using a `RegExp` you **MUST** include a matching group.
 
-Example: Replace all occurrences of `'hey'` with `<span>hey</span>`
 
-```js
-reactStringReplace('hey hey you', /(hey)/g, () => <span>hey</span>);
-```
-
-#### func
-
-Type: `function`
-
-The replacer function to run each time `match` is found. This function will be patched the matching string and an `index` which can be used for adding keys to replacement components if necessary. Character `offset` identifies the position of match start in the provided text.
-
-```js
-const func = (match, index, offset) => <span key={index}>{match}</span>;
-reactStringReplace('hey hey you', /(hey)/g, func);
-```
 
 ## License
 

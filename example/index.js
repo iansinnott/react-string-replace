@@ -18,17 +18,17 @@ const Demo = React.createClass({
     let replacedText;
 
     // Match URLs
-    replacedText = reactStringReplace(text, /(https?:\/\/\S+)/g, (match, i) => (
+    replacedText = reactStringReplace(text, /(https?:\/\/\S+)/g, (match, part, i) => (
       <a key={match + i} href={match}>{match}</a>
     ));
 
     // Match @-mentions
-    replacedText = reactStringReplace(replacedText, /@(\w+)/g, (match, i) => (
+    replacedText = reactStringReplace(replacedText, /@(\w+)/g, (match, part, i) => (
       <a key={match + i} href={`https://twitter.com/${match}`}>@{match}</a>
     ));
 
     // Match hashtags
-    replacedText = reactStringReplace(replacedText, /#(\w+)/g, (match, i) => (
+    replacedText = reactStringReplace(replacedText, /#(\w+)/g, (match, part, i) => (
       <a key={match + i} href={`https://twitter.com/hashtag/${match}`}>#{match}</a>
     ));
 
@@ -41,7 +41,7 @@ const Demo = React.createClass({
   },
 });
 
-const content = 'Hey my number is 555-555-5555.';
+const content = 'Apt 111, phone number 5555555555, web: https://www.replaced.com';
 
 // Render the app
 render(<Demo content={content} />, document.getElementById('root'));
