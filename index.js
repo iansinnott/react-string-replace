@@ -53,7 +53,7 @@ function replaceString(str, pattern, replacer) {
     var prevSegment = originalStr.slice(prevSegmentStart, offset);
 
     result.push(prevSegment, transformed);
-    prevSegmentStart += (offset + match.length);
+    prevSegmentStart = (offset + match.length);
   });
 
   result.push(str.slice(prevSegmentStart));  
