@@ -14,62 +14,17 @@ Current version follows the API of: [String.prototype.replace()](https://develop
 $ npm install --save react-string-replace
 ```
 
-## API
-
-### reactStringReplace(text, pattern, replacer)
-
-### Returns
-Array of React renderable components.
-
-### text
-Type: `(string|array)`
-
-String to replace the patterns within.
-
-**NOTE:** When passed an array this is the same as running the replacement on every string within the array. Any non-string values in the array will be left untouched.
-
-### pattern
-Type: `(regex|substr)`
-
-The string or RegExp pattern you would like to replace within `text`. Note that when using a `RegExp` you **MUST** include a matching group.
-
-### replacer
-Type: `(function(match, p1, ..., pN, offset, originalText))`
-
-Function that will trigger on each pattern match. The `match` argument is the group of characters matching the whole provided pattern.
-
-The `p1 ... pN` arguments are matches for each provided regex pattern group. 
-The `offset` is a start character position of the `match` in original string. 
-The `originalText` is our original string. 
-
-## Example 1
-
-Replace all occurrences of `'hey'` with `<span>hey</span>`
-
-```js
-const reactStringReplace = require('react-string-replace')
-const replacer = (match, part, offset) => <span key={offset}>{match}</span>;
-reactStringReplace('hey hey you', /(hey)/g, replacer);
-```
-
-## Example 2
-
-```js
-const reactStringReplace = require('react-string-replace')
-const replacer = (match, part, offset) => <span key={offset}>{match}</span>;
-reactStringReplace('hey hey you', /(hey)/g, replacer);
-```
-
 ## Usage
 
 ### Simple Example
+Wraps all occurences of 'your' in bold tags.
 
 ```js
 const reactStringReplace = require('react-string-replace')
 reactStringReplace('whats your name', 'your', (match, part, offset) => (
-  <span>{match}</span>
+  <b>{match}</b>
 ));
-// => [ 'whats ', <span>your</span>, ' name' ]
+// => [ 'whats ', <b>your</b>, ' name' ]
 ```
 
 ### More realistic example
@@ -118,7 +73,8 @@ const HighlightNumbers = React.createClass({
 
 ### Multiple replacements on a single string
 
-You can run multiple replacements on one string by calling the function multiple times on the returned result. For instance, if we want to match URLs, @-mentions and hashtags in a string we could do the following:
+You can run multiple replacements on one string by calling the function multiple times on the returned result. 
+For instance, if we want to match URLs, @-mentions and hashtags in a string we could do the following:
 
 ```js
 const reactStringReplace = require('react-string-replace')
@@ -127,18 +83,18 @@ const text = 'Hey @ian_sinn, check out this link https://github.com/iansinnott/ 
 let replacedText;
 
 // Match URLs
-replacedText = reactStringReplace(text, /(https?:\/\/\S+)/g, (match, i) => (
-  <a key={match + i} href={match}>{match}</a>
+replacedText = reactStringReplace(text, /(https?:\/\/\S+)/g, (match, urlPart, offset) => (
+  <a key={match + offset} href={match}>{match}</a>
 ));
 
 // Match @-mentions
-replacedText = reactStringReplace(replacedText, /@(\w+)/g, (match, i) => (
-  <a key={match + i} href={`https://twitter.com/${match}`}>@{match}</a>
+replacedText = reactStringReplace(replacedText, /@(\w+)/g, (match, mentionPart, offset) => (
+  <a key={match + offset} href={`https://twitter.com/${match}`}>@{match}</a>
 ));
 
 // Match hashtags
-replacedText = reactStringReplace(replacedText, /#(\w+)/g, (match, i) => (
-  <a key={match + i} href={`https://twitter.com/hashtag/${match}`}>#{match}</a>
+replacedText = reactStringReplace(replacedText, /#(\w+)/g, (match, tagPart, offset) => (
+  <a key={match + offset} href={`https://twitter.com/hashtag/${match}`}>#{match}</a>
 ));
 
 // => [
@@ -162,21 +118,31 @@ I wanted an easy way to do string replacement a la `String.prototype.replace` wi
 
 ## API
 
-### reactStringReplace(string, match, func)
+### reactStringReplace(text, pattern, replacer)
 
-#### string
+### Returns
+Array of React renderable components.
 
-Type: `string|array`
+### text
+Type: `(string|array)`
 
-The string or array you would like to do replacement on.
+String to replace the patterns within.
 
 **NOTE:** When passed an array this is the same as running the replacement on every string within the array. Any non-string values in the array will be left untouched.
 
-#### match
+### pattern
+Type: `(regex|substr)`
 
-Type: `regexp|string`
+The string or RegExp pattern you would like to replace within `text`. Note that when using a `RegExp` you **MUST** include a matching group.
 
+### replacer
+Type: `(function(match, p1, ..., pN, offset, originalText))`
 
+Function that will trigger on each pattern match. The `match` argument is the group of characters matching the whole provided pattern.
+
+The `p1 ... pN` arguments are matches for each provided regex pattern group. 
+The `offset` is a start character position of the `match` in original string. 
+The `originalText` is our original string. 
 
 
 ## License
