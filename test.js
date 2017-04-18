@@ -130,7 +130,7 @@ test('Allows empty strings within results', t => {
   ]);
 });
 
-test('Will not through if first element of input is empty string', t => {
+test('Will not throw if first element of input is empty string', t => {
   const string = 'http://a_photo.jpg some string';
   const replacedContent = replaceString(string, /(http?:\/\/.*\.(?:png|jpg))/g, match => {
     return { key: 'image', match };

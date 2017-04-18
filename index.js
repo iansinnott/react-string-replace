@@ -66,7 +66,7 @@ function replaceString(str, match, fn) {
       // Run a recursive call of this function on even elements,
       // removing the first element in _match
       for (var j = 0; j < result.length; j += 2) {
-        result[j] = flatten(replace(result[j], _match.slice(1), _fn));
+        result[j] = replace(result[j], _match.slice(1), _fn);
       }
     }
 
