@@ -28,9 +28,6 @@ var flatten = require('lodash.flatten');
  * @return {array}
  */
 function replaceString(str, match, fn) {
-  var curCharStart = 0;
-  var curCharLen = 0;
-
   if (str === '') {
     return str;
   } else if (!str || !isString(str)) {
@@ -44,6 +41,9 @@ function replaceString(str, match, fn) {
   }
 
   function replace(string, matchArray, _fn) {
+    var curCharStart = 0;
+    var curCharLen = 0;
+
     var re = matchArray[0];
 
     if (!isRegExp(re)) {
@@ -61,9 +61,10 @@ function replaceString(str, match, fn) {
     }
 
     if (matchArray.length > 1) {
-      // Check each remaining part again with fewer matches
-      for (var k = 0; k < result.length; k += 2) {
-        result[k] = flatten(replace(result[k], matchArray.slice(1), _fn));
+      // Run a recursive call of this function on even elements,
+      // removing the first element in matchArray
+      for (var j = 0; j < result.length; j += 2) {
+        result[j] = flatten(replace(result[j], matchArray.slice(1), _fn));
       }
     }
 
