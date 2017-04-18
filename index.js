@@ -40,17 +40,17 @@ function replaceString(str, match, fn) {
     match = [match];
   }
 
-  function replace(string, matchArray, _fn) {
+  function replace(_str, _match, _fn) {
     var curCharStart = 0;
     var curCharLen = 0;
 
-    var re = matchArray[0];
+    var re = _match[0];
 
     if (!isRegExp(re)) {
       re = new RegExp('(' + escapeRegExp(re) + ')', 'gi');
     }
 
-    var result = string.split(re);
+    var result = _str.split(re);
 
     // Apply fn to all odd elements
     for (var i = 1, length = result.length; i < length; i += 2) {
@@ -60,11 +60,11 @@ function replaceString(str, match, fn) {
       curCharStart += curCharLen;
     }
 
-    if (matchArray.length > 1) {
+    if (_match.length > 1) {
       // Run a recursive call of this function on even elements,
-      // removing the first element in matchArray
+      // removing the first element in _match
       for (var j = 0; j < result.length; j += 2) {
-        result[j] = flatten(replace(result[j], matchArray.slice(1), _fn));
+        result[j] = flatten(replace(result[j], _match.slice(1), _fn));
       }
     }
 
