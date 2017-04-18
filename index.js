@@ -42,6 +42,10 @@ function replaceString(str, match, fn) {
     var curCharStart = 0;
     var curCharLen = 0;
 
+    if (match.length === 0 || match[0] === '') {
+      return _str;
+    }
+
     var re = _match[0];
 
     if (!isRegExp(re)) {
@@ -66,7 +70,7 @@ function replaceString(str, match, fn) {
       }
     }
 
-    return result;
+    return flatten(result);
   }
 
   return replace(str, match, fn);
