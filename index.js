@@ -31,9 +31,7 @@ function replaceString(str, match, fn) {
   if (str === '') {
     return str;
   } else if (!str || !isString(str)) {
-    throw new TypeError(
-      'First argument to react-string-replace#replaceString must be a string',
-    );
+    throw new TypeError('First argument to react-string-replace#replaceString must be a string');
   }
 
   if (!Array.isArray(match)) {
@@ -77,9 +75,7 @@ function replaceString(str, match, fn) {
 module.exports = function reactStringReplace(source, match, fn) {
   if (!Array.isArray(source)) source = [source];
 
-  return flatten(
-    source.map(function(x) {
-      return isString(x) ? replaceString(x, match, fn) : x;
-    }),
-  );
+  return flatten(source.map(function(x) {
+    return isString(x) ? replaceString(x, match, fn) : x;
+  }));
 };
