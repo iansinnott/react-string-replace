@@ -168,6 +168,16 @@ test('Works with array of matches', t => {
   );
 
   t.deepEqual(
+    replaceString('hey there', ['hey', 'ey'], x => ({ worked: x })),
+    ['', { worked: 'hey' }, ' there']
+  );
+
+  t.deepEqual(
+    replaceString('hey there', ['ey', 'hey'], x => ({ worked: x })),
+    ['h', { worked: 'ey' }, ' there']
+  );
+
+  t.deepEqual(
     replaceString('hey there', ['nomatch', 'nomatch2'], x => ({ worked: x })),
     ['hey there']
   );
