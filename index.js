@@ -34,32 +34,51 @@ function replaceString(str, match, fn) {
   if (str === '') {
     return str;
   } else if (!str || !isString(str)) {
-    throw new TypeError('First argument to react-string-replace#replaceString must be a string');
+    throw new TypeError(
+      'First argument to react-string-replace#replaceString must be a string',
+    );
   }
 
-  var re = match;
-
-  if (!isRegExp(re)) {
-    re = new RegExp('(' + escapeRegExp(re) + ')', 'gi');
+  if (!Array.isArray(match)) {
+    match = [match];
   }
 
-  var result = str.split(re);
+  function replace(string, matchArray, _fn) {
+    var re = matchArray[0];
 
-  // Apply fn to all odd elements
-  for (var i = 1, length = result.length; i < length; i += 2) {
-    curCharLen = result[i].length;
-    curCharStart += result[i - 1].length;
-    result[i] = fn(result[i], i, curCharStart);
-    curCharStart += curCharLen;
+    if (!isRegExp(re)) {
+      re = new RegExp('(' + escapeRegExp(re) + ')', 'gi');
+    }
+
+    var result = string.split(re);
+
+    // Apply fn to all odd elements
+    for (var i = 1, length = result.length; i < length; i += 2) {
+      curCharLen = result[i].length;
+      curCharStart += result[i - 1].length;
+      result[i] = _fn(result[i], i, curCharStart);
+      curCharStart += curCharLen;
+    }
+
+    if (matchArray.length > 1) {
+      // Check each remaining part again with fewer matches
+      for (var k = 0; k < result.length; k += 2) {
+        result[k] = flatten(replace(result[k], matchArray.slice(1), _fn));
+      }
+    }
+
+    return result;
   }
 
-  return result;
+  return replace(str, match, fn);
 }
 
 module.exports = function reactStringReplace(source, match, fn) {
   if (!Array.isArray(source)) source = [source];
 
-  return flatten(source.map(function(x) {
-    return isString(x) ? replaceString(x, match, fn) : x;
-  }));
+  return flatten(
+    source.map(function(x) {
+      return isString(x) ? replaceString(x, match, fn) : x;
+    }),
+  );
 };
