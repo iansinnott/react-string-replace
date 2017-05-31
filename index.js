@@ -28,32 +28,52 @@ var flatten = require('lodash.flatten');
  * @return {array}
  */
 function replaceString(str, match, fn) {
-  var curCharStart = 0;
-  var curCharLen = 0;
-
   if (str === '') {
     return str;
   } else if (!str || !isString(str)) {
     throw new TypeError('First argument to react-string-replace#replaceString must be a string');
   }
 
-  var re = match;
-
-  if (!isRegExp(re)) {
-    re = new RegExp('(' + escapeRegExp(re) + ')', 'gi');
+  if (!Array.isArray(match)) {
+    match = [match];
   }
 
-  var result = str.split(re);
+  function replace(_str, _match, _fn) {
+    var curCharStart = 0;
+    var curCharLen = 0;
 
-  // Apply fn to all odd elements
-  for (var i = 1, length = result.length; i < length; i += 2) {
-    curCharLen = result[i].length;
-    curCharStart += result[i - 1].length;
-    result[i] = fn(result[i], i, curCharStart);
-    curCharStart += curCharLen;
+    if (match.length === 0 || match[0] === '') {
+      return _str;
+    }
+
+    var re = _match[0];
+
+    if (!isRegExp(re)) {
+      re = new RegExp('(' + escapeRegExp(re) + ')', 'gi');
+    }
+
+    var result = _str.split(re);
+
+    // Apply fn to all odd elements
+    for (var i = 1, length = result.length; i < length; i += 2) {
+      curCharLen = result[i].length;
+      curCharStart += result[i - 1].length;
+      result[i] = _fn(result[i], i, curCharStart);
+      curCharStart += curCharLen;
+    }
+
+    if (_match.length > 1) {
+      // Run a recursive call of this function on even elements,
+      // removing the first element in _match
+      for (var j = 0; j < result.length; j += 2) {
+        result[j] = replace(result[j], _match.slice(1), _fn);
+      }
+    }
+
+    return flatten(result);
   }
 
-  return result;
+  return replace(str, match, fn);
 }
 
 module.exports = function reactStringReplace(source, match, fn) {

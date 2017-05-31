@@ -2,7 +2,7 @@
 import test from 'ava';
 import replaceString from './';
 
-test("Doesn't throw if not given invalid input", t => {
+test('Doesn\'t throw if not given invalid input', t => {
   t.notThrows(() => replaceString());
   t.notThrows(() => replaceString(''));
 });
@@ -130,7 +130,7 @@ test('Allows empty strings within results', t => {
   ]);
 });
 
-test('Will not through if first element of input is empty string', t => {
+test('Will not throw if first element of input is empty string', t => {
   const string = 'http://a_photo.jpg some string';
   const replacedContent = replaceString(string, /(http?:\/\/.*\.(?:png|jpg))/g, match => {
     return { key: 'image', match };
@@ -149,4 +149,57 @@ test('Will not through if first element of input is empty string', t => {
       return { key: 'text', match };
     });
   });
+});
+
+test('Works with array of matches', t => {
+  t.deepEqual(
+    replaceString('hey there', [], x => ({ worked: x })),
+    ['hey there']
+  );
+
+  t.deepEqual(
+    replaceString('hey there', [''], x => ({ worked: x })),
+    ['hey there']
+  );
+
+  t.deepEqual(
+    replaceString('hey there', ['hey'], x => ({ worked: x })),
+    ['', { worked: 'hey' }, ' there']
+  );
+
+  t.deepEqual(
+    replaceString('hey there', ['hey', 'ey'], x => ({ worked: x })),
+    ['', { worked: 'hey' }, ' there']
+  );
+
+  t.deepEqual(
+    replaceString('hey there', ['ey', 'hey'], x => ({ worked: x })),
+    ['h', { worked: 'ey' }, ' there']
+  );
+
+  t.deepEqual(
+    replaceString('hey there', ['nomatch', 'nomatch2'], x => ({ worked: x })),
+    ['hey there']
+  );
+
+  t.deepEqual(
+    replaceString('hey there', ['hey', 'there'], x => ({ worked: x })),
+    ['', { worked: 'hey' }, ' ', {worked: 'there'}, '']
+  );
+
+  t.deepEqual(
+    replaceString('hey there hey there', ['hey', 'there'], x => ({ worked: x })),
+    ['', { worked: 'hey' }, ' ', { worked: 'there' }, ' ', { worked: 'hey' }, ' ', { worked: 'there' }, '']
+  );
+
+  t.deepEqual(
+    replaceString('hey and there and hey and there', ['hey', 'there'], x => ({ worked: x })),
+    ['', { worked: 'hey' }, ' and ', { worked: 'there' }, ' and ', { worked: 'hey' }, ' and ', { worked: 'there' }, '']
+  );
+
+
+  t.deepEqual(
+    replaceString('a longer example', ['e', 'a', 'x'], x => ({ worked: x })),
+    ['', { worked: 'a' }, ' long', { worked: 'e' }, 'r ', { worked: 'e' }, '', { worked: 'x' }, '', { worked: 'a' }, 'mpl', { worked: 'e' }, '']
+  );
 });
