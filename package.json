@@ -31,10 +31,7 @@
     "replace"
   ],
   "dependencies": {
-    "lodash.escaperegexp": "^4.1.1",
-    "lodash.flatten": "^4.2.0",
-    "lodash.isregexp": "^4.0.1",
-    "lodash.isstring": "^4.0.1"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "ava": "^0.20.0",
