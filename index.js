@@ -1,8 +1,8 @@
 /* eslint-disable vars-on-top, no-var, prefer-template */
-var isRegExp = require('lodash.isregexp');
-var escapeRegExp = require('lodash.escaperegexp');
-var isString = require('lodash.isstring');
-var flatten = require('lodash.flatten');
+var isRegExp = require('lodash/isRegExp');
+var escapeRegExp = require('lodash/escapeRegExp');
+var isString = require('lodash/isString');
+var flatten = require('lodash/flatten');
 
 /**
  * Given a string, replace every substring that is matched by the `match` regex

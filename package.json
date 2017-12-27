@@ -1,6 +1,6 @@
 {
   "name": "react-string-replace",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "String#replace for React components",
   "license": "MIT",
   "main": "index.js",
@@ -31,14 +31,11 @@
     "replace"
   ],
   "dependencies": {
-    "lodash.escaperegexp": "^4.1.1",
-    "lodash.flatten": "^4.2.0",
-    "lodash.isregexp": "^4.0.1",
-    "lodash.isstring": "^4.0.1"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "ava": "^0.20.0",
     "babel-eslint": "^8.0.0",
+    "ava": "^0.23.0",
     "eslint": "^3.10.2",
     "eslint-config-iansinnott": "^1.0.1",
     "eslint-config-zen": "^3.0.0",
