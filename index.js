@@ -8,7 +8,7 @@ var flatten = require('lodash/flatten');
  * Given a string, replace every substring that is matched by the `match` regex
  * with the result of calling `fn` on matched substring. The result will be an
  * array with all odd indexed elements containing the replacements. The primary
- * use case is similar to using String.prototype.replace execpt for React.
+ * use case is similar to using String.prototype.replace except for React.
  *
  * React will happily render an array as children of a react element, which
  * makes this approach very useful for tasks like surrounding certain text
