@@ -135,7 +135,7 @@ reactStringReplace('hey hey you', /(hey)/g, () => <span>hey</span>);
 
 Type: `function`
 
-The replacer function to run each time `match` is found. This function will be patched the matching string and an `index` which can be used for adding keys to replacement components if necessary. Character `offset` identifies the position of match start in the provided text.
+The replacer function to run each time `match` is found. This function will be passed the matching string and an `index` which can be used for adding keys to replacement components if necessary. Character `offset` identifies the position of match start in the provided text.
 
 ```js
 const func = (match, index, offset) => <span key={index}>{match}</span>;
