@@ -49,7 +49,7 @@ function replaceString(str, match, fn) {
   for (var i = 1, length = result.length; i < length; i += 2) {
     curCharLen = result[i].length;
     curCharStart += result[i - 1].length;
-    result[i] = fn(result[i], i, curCharStart);
+    result[i] = fn(result[i], parseInt(i / 2), curCharStart);
     curCharStart += curCharLen;
   }
 
