@@ -26,6 +26,14 @@ test('Works with matching groups', t => {
   );
 });
 
+test('Respects global flag to replace multiple matches', t => {
+  const str = 'Hey @ian_sinn and @other_handle, check out this link https://github.com/iansinnott/';
+  t.deepEqual(
+    replaceString(str, /@(\w+)/g, x => ({ worked: x })),
+    ['Hey ', { worked: 'ian_sinn' }, ' and ', { worked: 'other_handle' }, ', check out this link https://github.com/iansinnott/']
+  );
+});
+
 test('Works with strings', t => {
   t.deepEqual(
     replaceString('hey there', 'hey', x => ({ worked: x })),
