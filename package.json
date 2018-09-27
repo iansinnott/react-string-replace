@@ -34,7 +34,7 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "babel-eslint": "^8.0.0",
+    "babel-eslint": "^10.0.1",
     "ava": "^0.23.0",
     "eslint": "^3.10.2",
     "eslint-config-iansinnott": "^1.0.1",
