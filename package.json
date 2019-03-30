@@ -1,6 +1,6 @@
 {
   "name": "react-string-replace",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "String#replace for React components",
   "license": "MIT",
   "main": "index.js",
@@ -34,8 +34,8 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "babel-eslint": "^8.0.0",
     "ava": "^0.23.0",
+    "babel-eslint": "^8.0.0",
     "eslint": "^3.10.2",
     "eslint-config-iansinnott": "^1.0.1",
     "eslint-config-zen": "^3.0.0",
