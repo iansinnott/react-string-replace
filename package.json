@@ -40,7 +40,7 @@
     "eslint": "^3.10.2",
     "eslint-config-iansinnott": "^1.0.1",
     "eslint-config-zen": "^3.0.0",
-    "eslint-plugin-flowtype": "^2.25.0",
+    "eslint-plugin-flowtype": "^4.2.0",
     "eslint-plugin-react": "^7.0.0"
   }
 }
