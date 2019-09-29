@@ -37,7 +37,7 @@
   "devDependencies": {
     "ava": "^0.23.0",
     "babel-eslint": "^8.0.0",
-    "eslint": "^3.10.2",
+    "eslint": "^6.5.0",
     "eslint-config-iansinnott": "^1.0.1",
     "eslint-config-zen": "^3.0.0",
     "eslint-plugin-flowtype": "^2.25.0",
