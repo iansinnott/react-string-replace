@@ -4,6 +4,7 @@
   "description": "String#replace for React components",
   "license": "MIT",
   "main": "index.js",
+  "module": "esm/index.js",
   "repository": "iansinnott/react-string-replace",
   "author": {
     "name": "Ian Sinnott",
@@ -14,7 +15,7 @@
     "node": ">=0.12.0"
   },
   "scripts": {
-    "lint": "eslint --ignore-pattern example index.js",
+    "lint": "eslint --ignore-pattern example esm index.js",
     "test": "npm run lint && ava --verbose",
     "bump:patch": "npm version patch -m \"v%s\"",
     "bump:minor": "npm version minor -m \"v%s\"",
@@ -24,7 +25,8 @@
   },
   "files": [
     "index.js",
-    "index.d.ts"
+    "index.d.ts",
+    "esm/index.js"
   ],
   "keywords": [
     "react",
@@ -32,7 +34,8 @@
     "replace"
   ],
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "lodash-es": "^4.17.15"
   },
   "devDependencies": {
     "ava": "^0.23.0",
