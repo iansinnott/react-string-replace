@@ -123,7 +123,9 @@ The string or array you would like to do replacement on.
 
 Type: `regexp|string`
 
-The string or RegExp you would like to replace within `string`. Note that when using a `RegExp` you **MUST** include a matching group.
+The string or RegExp you would like to replace within `string`. 
+
+**NOTE:** When using a `RegExp` you **MUST** include a capturing group. (`/(hey)/g` is ok, `/hey/g` is not.)
 
 Example: Replace all occurrences of `'hey'` with `<span>hey</span>`
 
