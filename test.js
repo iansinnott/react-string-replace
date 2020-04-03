@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import test from 'ava';
 import replaceString from './';
+import {createElement} from "react";
 
 test("Doesn't throw if not given invalid input", t => {
   t.notThrows(() => replaceString());
@@ -47,6 +48,14 @@ test('Works with arrays', t => {
     replaceString(input, 'hey', x => ({ worked: x })),
     ['', { worked: 'hey' }, ' there', { value: 'you' }, 'again']
   );
+});
+
+test('Works with react element', t => {
+  const input = createElement('div', { className: 'dummy class' }, 'Hey there you');
+  t.deepEqual(
+      replaceString(input, 'you', (x) => `(${x})`),
+      [createElement('div', { className: 'dummy class' }, ['Hey there ', '(you)', ''])],
+  )
 });
 
 test('Successfully escapes parens in strings', t => {

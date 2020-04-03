@@ -3,6 +3,7 @@ var isRegExp = require('lodash/isRegExp');
 var escapeRegExp = require('lodash/escapeRegExp');
 var isString = require('lodash/isString');
 var flatten = require('lodash/flatten');
+var React = require('react');
 
 /**
  * Given a string, replace every substring that is matched by the `match` regex
@@ -60,6 +61,15 @@ module.exports = function reactStringReplace(source, match, fn) {
   if (!Array.isArray(source)) source = [source];
 
   return flatten(source.map(function(x) {
+    if (React.isValidElement(x)) {
+      const { props } = x;
+      const children = props.children;
+      delete props.children;
+      const replacedChildren = reactStringReplace(children, match, fn);
+
+      return React.createElement(x.type, props, replacedChildren);
+    }
+
     return isString(x) ? replaceString(x, match, fn) : x;
   }));
 };
