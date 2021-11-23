@@ -31,9 +31,7 @@
     "string",
     "replace"
   ],
-  "dependencies": {
-    "lodash": "^4.17.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "ava": "^0.23.0",
     "babel-eslint": "^8.0.0",

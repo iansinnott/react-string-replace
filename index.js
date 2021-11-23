@@ -1,8 +1,31 @@
 /* eslint-disable vars-on-top, no-var, prefer-template */
-var isRegExp = require('lodash/isRegExp');
-var escapeRegExp = require('lodash/escapeRegExp');
-var isString = require('lodash/isString');
-var flatten = require('lodash/flatten');
+var isRegExp = function (re) { 
+  return re instanceof RegExp;
+};
+var escapeRegExp = function escapeRegExp(string) {
+  var reRegExpChar = /[\\^$.*+?()[\]{}|]/g,
+    reHasRegExpChar = RegExp(reRegExpChar.source);
+
+  return (string && reHasRegExpChar.test(string))
+    ? string.replace(reRegExpChar, '\\$&')
+    : string;
+};
+var isString = function (value) {
+  return typeof value === 'string';
+};
+var flatten = function (array) {
+  var newArray = [];
+
+  array.forEach(function (item) {
+    if (Array.isArray(item)) {
+      newArray = newArray.concat(item);
+    } else {
+      newArray.push(item);
+    }
+  });
+
+  return newArray;
+};
 
 /**
  * Given a string, replace every substring that is matched by the `match` regex
