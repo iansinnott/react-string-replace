@@ -66,7 +66,7 @@ function replaceString(str, match, fn) {
     re = new RegExp('(' + escapeRegExp(re) + ')', 'gi');
   }
 
-  var result = str.split(re);
+  var result = str.split(re).filter(item => item !== undefined);
 
   // Apply fn to all odd elements
   for (var i = 1, length = result.length; i < length; i += 2) {
