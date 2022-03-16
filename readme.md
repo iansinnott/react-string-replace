@@ -15,10 +15,21 @@ yarn add react-string-replace
 
 ## Usage
 
+First, import the lib. Both `require` and `import` are supported.
+
+```js
+import reactStringReplace from 'react-string-replace';
+// OR
+const reactStringReplace = require('react-string-replace')
+```
+
+Examples will use `import` since it is more common in the React ecosystem.
+
 ### Simple Example
 
 ```js
-const reactStringReplace = require('react-string-replace')
+import reactStringReplace from 'react-string-replace';
+
 reactStringReplace('whats your name', 'your', (match, i) => (
   <span>{match}</span>
 ));
@@ -46,7 +57,7 @@ reactStringReplace('Apt 111, phone number 5555555555.', /(\d+)/g, (match, i) => 
 ### Within a React component
 
 ```js
-const reactStringReplace = require('react-string-replace');
+import reactStringReplace from 'react-string-replace';
 
 const HighlightNumbers = React.createClass({
   render() {
@@ -67,7 +78,7 @@ const HighlightNumbers = React.createClass({
 You can run multiple replacements on one string by calling the function multiple times on the returned result. For instance, if we want to match URLs, @-mentions and hashtags in a string we could do the following:
 
 ```js
-const reactStringReplace = require('react-string-replace')
+import reactStringReplace from 'react-string-replace';
 
 const text = 'Hey @ian_sinn, check out this link https://github.com/iansinnott/ Hope to see you at #reactconf';
 let replacedText;
@@ -104,11 +115,11 @@ See the [`example/`](https://github.com/iansinnott/react-string-replace/tree/mas
 
 ## Why?
 
-I wanted an easy way to do string replacement a la `String.prototype.replace` within React components **without** breaking React's built in string escaping functionality. This meant standard string replacement combined with `dangerouslySetInnerHTML` was out of the question.
+I wanted an easy way to do string replacement similar to `String.prototype.replace` within React components **without** breaking React's built in string escaping and XSS protection. This meant standard string replacement combined with `dangerouslySetInnerHTML` was out of the question.
 
 ## API
 
-### reactStringReplace(string, match, func)
+### reactStringReplace(string, match, replacementFunction)
 
 #### string
 
@@ -132,16 +143,22 @@ Example: Replace all occurrences of `'hey'` with `<span>hey</span>`
 reactStringReplace('hey hey you', /(hey)/g, () => <span>hey</span>);
 ```
 
-#### func
+#### replacementFunction
 
 Type: `function`
 
 The replacer function to run each time `match` is found. This function will be passed the matching string and an `index` which can be used for adding keys to replacement components if necessary. Character `offset` identifies the position of match start in the provided text.
 
 ```js
-const func = (match, index, offset) => <span key={index}>{match}</span>;
-reactStringReplace('hey hey you', /(hey)/g, func);
+const replacementFunction = (match, index, offset) => <span key={index}>{match}</span>;
+reactStringReplace('hey hey you', /(hey)/g, replacementFunction);
 ```
+
+## API Stability
+
+With v1.0.0 the API is considered stable and should be considered production ready. Pull requests are still welcome but there is currently no intent to make changes to this lib other than bug fixes (please submit an issue if you find something!).
+
+For details on API tests see [the tests file](./test.js).
 
 ## License
 
