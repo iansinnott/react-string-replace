@@ -8,7 +8,7 @@
   "author": {
     "name": "Ian Sinnott",
     "email": "ian@iansinnott.com",
-    "url": "github.com/iansinnott"
+    "url": "https://github.com/iansinnott"
   },
   "engines": {
     "node": ">=0.12.0"
