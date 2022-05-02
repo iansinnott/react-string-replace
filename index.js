@@ -46,7 +46,7 @@ var flatten = function (array) {
  * // => ['Emphasize all phone numbers like ', <strong>884-555-4443</strong>, '.'
  *
  * @param {string} str
- * @param {regexp|str} match Must contain a matching group
+ * @param {RegExp|str} match Must contain a matching group
  * @param {function} fn
  * @return {array}
  */
@@ -70,6 +70,12 @@ function replaceString(str, match, fn) {
 
   // Apply fn to all odd elements
   for (var i = 1, length = result.length; i < length; i += 2) {
+    /** @see {@link https://github.com/iansinnott/react-string-replace/issues/74} */
+    if (result[i] === undefined || result[i - 1] === undefined) {
+      console.warn('reactStringReplace: Encountered undefined value during string replacement. Your RegExp may not be working the way you expect.');
+      continue;
+    }
+
     curCharLen = result[i].length;
     curCharStart += result[i - 1].length;
     result[i] = fn(result[i], i, curCharStart);

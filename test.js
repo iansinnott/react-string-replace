@@ -158,3 +158,15 @@ test('Will not through if first element of input is empty string', t => {
     });
   });
 });
+
+test("Avoids undefined values due to regex", (t) => {
+  const string = `hey you there`;
+  const re = /(hey)|(you)/;
+
+  // Normal splits include undefined if you do this
+  t.deepEqual(string.split(re), ["", "hey", undefined, " ", undefined, "you", " there"]);
+
+  t.notThrows(() => {
+    replaceString(string, /(hey)|(you)/, x => x);
+  });
+});
