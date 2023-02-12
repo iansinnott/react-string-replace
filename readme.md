@@ -34,6 +34,15 @@ reactStringReplace('whats your name', 'your', (match, i) => (
   <span>{match}</span>
 ));
 // => [ 'whats ', <span>your</span>, ' name' ]
+
+
+// Note that indexing [i] here starts at 1, not 0
+// If you need to change this behavior for now try the workaround: 
+let count = -1;
+reactStringReplace("the more the better", "the", (match, i) => (
+  count ++
+  <span>{match}</span>
+));
 ```
 
 ### More realistic example
