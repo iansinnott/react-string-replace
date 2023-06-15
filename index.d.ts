@@ -5,5 +5,22 @@ declare module "react-string-replace" {
     cb?: (match: string, index: number, offset: number) => React.ReactNode
   ): React.ReactNode[];
 
-  export default reactStringReplace;
+  type ReactStringReplaceRules = {
+    search: string | RegExp;
+    onMatch: (match: string, index: number) => React.ReactNode;
+  }[];
+
+  type ReactStringReplaceProps = {
+    rules: ReactStringReplaceRules;
+    children: string | React.ReactNode[];
+  };
+
+  function ReactStringReplace(props: ReactStringReplaceProps): JSX.Element;
+
+  export {
+    reactStringReplace,
+    ReactStringReplace,
+    ReactStringReplaceProps,
+    ReactStringReplaceRules,
+  };
 }

@@ -85,10 +85,22 @@ function replaceString(str, match, fn) {
   return result;
 }
 
-module.exports = function reactStringReplace(source, match, fn) {
+function reactStringReplace(source, match, fn) {
   if (!Array.isArray(source)) source = [source];
 
   return flatten(source.map(function(x) {
     return isString(x) ? replaceString(x, match, fn) : x;
   }));
 };
+
+function ReactStringReplace(props) {
+  let tmp = [props.children];
+
+  props.rules.forEach(({ search, onMatch }) => {
+    tmp = reactStringReplace(tmp, search, onMatch);
+  });
+
+  return <>{tmp}</>;
+};
+
+module.exports = { reactStringReplace, ReactStringReplace }
