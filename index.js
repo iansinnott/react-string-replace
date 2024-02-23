@@ -66,10 +66,15 @@ function replaceString(str, match, fn, count = null) {
     re = new RegExp('(' + escapeRegExp(re) + ')', 'gi');
   }
 
-  var result = count ? str.split(re,count+1) : str.split(re);
-  console.log(result);
+  var result = str.split(re);
+  
   // Apply fn to all odd elements
   for (var i = 1, length = result.length; i < length; i += 2) {
+
+    if (count && count*2<i){ 
+      break;
+    }
+    
     /** @see {@link https://github.com/iansinnott/react-string-replace/issues/74} */
     if (result[i] === undefined || result[i - 1] === undefined) {
       console.warn('reactStringReplace: Encountered undefined value during string replacement. Your RegExp may not be working the way you expect.');
@@ -79,7 +84,7 @@ function replaceString(str, match, fn, count = null) {
     curCharLen = result[i].length;
     curCharStart += result[i - 1].length;
     result[i] = fn(result[i], i, curCharStart);
-    curCharStart += curCharLen;
+    curCharStart += curCharLen;    
   }
 
   return result;
