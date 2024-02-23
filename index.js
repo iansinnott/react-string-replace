@@ -67,7 +67,7 @@ function replaceString(str, match, fn, count = null) {
   }
 
   var result = str.split(re);
-  
+
   // Apply fn to all odd elements
   for (var i = 1, length = result.length; i < length; i += 2) {
 
@@ -84,7 +84,7 @@ function replaceString(str, match, fn, count = null) {
     curCharLen = result[i].length;
     curCharStart += result[i - 1].length;
     result[i] = fn(result[i], i, curCharStart);
-    curCharStart += curCharLen;    
+    curCharStart += curCharLen;
   }
 
   return result;
