@@ -67,7 +67,7 @@ function replaceString(str, match, fn, count = null) {
   }
 
   var result = count ? str.split(re,count+1) : str.split(re);
-
+  console.log(result);
   // Apply fn to all odd elements
   for (var i = 1, length = result.length; i < length; i += 2) {
     /** @see {@link https://github.com/iansinnott/react-string-replace/issues/74} */
