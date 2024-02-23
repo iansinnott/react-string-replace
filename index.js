@@ -50,7 +50,7 @@ var flatten = function (array) {
  * @param {function} fn
  * @return {array}
  */
-function replaceString(str, match, fn) {
+function replaceString(str, match, fn, count = null) {
   var curCharStart = 0;
   var curCharLen = 0;
 
@@ -66,7 +66,7 @@ function replaceString(str, match, fn) {
     re = new RegExp('(' + escapeRegExp(re) + ')', 'gi');
   }
 
-  var result = str.split(re);
+  var result = count ? str.split(re,count) : str.split(re);
 
   // Apply fn to all odd elements
   for (var i = 1, length = result.length; i < length; i += 2) {
@@ -85,10 +85,10 @@ function replaceString(str, match, fn) {
   return result;
 }
 
-module.exports = function reactStringReplace(source, match, fn) {
+module.exports = function reactStringReplace(source, match, fn, count = null) {
   if (!Array.isArray(source)) source = [source];
 
   return flatten(source.map(function(x) {
-    return isString(x) ? replaceString(x, match, fn) : x;
+    return isString(x) ? replaceString(x, match, fn, count) : x;
   }));
 };
