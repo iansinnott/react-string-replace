@@ -97,11 +97,14 @@ module.exports = function reactStringReplace(source, match, fn, count = null) {
     source.map(function (x) {
       let ret;
       if (isString(x)) {
-        if (count > 0) ret = replaceString(x, match, fn, count);
-        else ret = x;
-        count -= (
-          x.match(new RegExp("(" + escapeRegExp(match) + ")", "gi")) || []
-        ).length;
+        if (count > 0) {
+          ret = replaceString(x, match, fn, count);
+          count -= (
+            x.match(new RegExp("(" + escapeRegExp(match) + ")", "gi")) || []
+          ).length
+        } else {
+          ret = replaceString(x,match, fn, 0);
+        }
       } else {
         ret = x;
       }
