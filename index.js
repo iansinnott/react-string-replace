@@ -93,7 +93,19 @@ function replaceString(str, match, fn, count = null) {
 module.exports = function reactStringReplace(source, match, fn, count = null) {
   if (!Array.isArray(source)) source = [source];
 
-  return flatten(source.map(function(x) {
-    return isString(x) ? replaceString(x, match, fn, count) : x;
-  }));
-};
+  return flatten(
+    source.map(function (x) {
+      let ret;
+      if (isString(x)) {
+        if (count > 0) ret = replaceString(x, match, fn, count);
+        else ret = x;
+        count -= (
+          x.match(new RegExp("(" + escapeRegExp(match) + ")", "gi")) || []
+        ).length;
+      } else {
+        ret = x;
+      }
+      return ret;
+    }),
+  );
+}
