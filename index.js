@@ -71,7 +71,7 @@ function replaceString(str, match, fn, count = null) {
   // Apply fn to all odd elements
   for (var i = 1, length = result.length; i < length; i += 2) {
 
-    if (count && (count*2<i || count < 1)) { 
+    if (count && (count * 2 < i || count < 1)) {
       break;
     }
     
