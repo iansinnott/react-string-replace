@@ -128,7 +128,7 @@ I wanted an easy way to do string replacement similar to `String.prototype.repla
 
 ## API
 
-### reactStringReplace(string, match, replacementFunction)
+### reactStringReplace(string, match, replacementFunction, count)
 
 #### string
 
@@ -161,6 +161,18 @@ The replacer function to run each time `match` is found. This function will be p
 ```js
 const replacementFunction = (match, index, offset) => <span key={index}>{match}</span>;
 reactStringReplace('hey hey you', /(hey)/g, replacementFunction);
+```
+
+#### count
+
+Type: `number`
+
+The number of substitutions to perform - for example if `count` is 1, then only the first occurrence of the string will be replaced. 
+
+Example: Replace first occurrence of `'hey'` with `<span>hey</span>`
+
+```js
+reactStringReplace('hey hey you', 'hey', () => <span>hey</span>, 1)
 ```
 
 ## API Stability

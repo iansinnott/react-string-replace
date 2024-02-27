@@ -50,7 +50,7 @@ var flatten = function (array) {
  * @param {function} fn
  * @return {array}
  */
-function replaceString(str, match, fn) {
+function replaceString(str, match, fn, count = null) {
   var curCharStart = 0;
   var curCharLen = 0;
 
@@ -70,6 +70,11 @@ function replaceString(str, match, fn) {
 
   // Apply fn to all odd elements
   for (var i = 1, length = result.length; i < length; i += 2) {
+
+    if (Number.isInteger(count) && (count * 2 < i || count < 1)) {
+      break;
+    }
+    
     /** @see {@link https://github.com/iansinnott/react-string-replace/issues/74} */
     if (result[i] === undefined || result[i - 1] === undefined) {
       console.warn('reactStringReplace: Encountered undefined value during string replacement. Your RegExp may not be working the way you expect.');
@@ -85,10 +90,25 @@ function replaceString(str, match, fn) {
   return result;
 }
 
-module.exports = function reactStringReplace(source, match, fn) {
+module.exports = function reactStringReplace(source, match, fn, count = null) {
   if (!Array.isArray(source)) source = [source];
 
-  return flatten(source.map(function(x) {
-    return isString(x) ? replaceString(x, match, fn) : x;
-  }));
-};
+  return flatten(
+    source.map(function (x) {
+      let ret;
+      if (isString(x)) {
+        if (Number.isInteger(count) && count > 0) {
+          ret = replaceString(x, match, fn, count);
+          count -= (
+            x.match(new RegExp("(" + escapeRegExp(match) + ")", "gi")) || []
+          ).length
+        } else {
+          ret = replaceString(x, match, fn, count);
+        }
+      } else {
+        ret = x;
+      }
+      return ret;
+    }),
+  );
+}
