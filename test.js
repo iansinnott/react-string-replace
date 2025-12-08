@@ -176,8 +176,8 @@ test("Indexes start at 0 and are contiguous", t => {
   const re = /(\w+)/;
 
   let expectedIndex = 0;
-  replaceString(string, re, (_, index) => {
+  replaceString(string, re, (match, index) => {
     t.deepEqual(expectedIndex, index);
-    index++;
+    expectedIndex++;
   });
 });
