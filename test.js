@@ -170,3 +170,14 @@ test("Avoids undefined values due to regex", (t) => {
     replaceString(string, /(hey)|(you)/, x => x);
   });
 });
+
+test("Indexes start at 0 and are contiguous", t => {
+  const string = 'Hello there general Kenobi';
+  const re = /(\w+)/;
+
+  let expectedIndex = 0;
+  replaceString(string, re, (_, index) => {
+    t.deepEqual(expectedIndex, index);
+    index++;
+  });
+});
