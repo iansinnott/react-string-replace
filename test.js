@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import test from 'ava';
 import replaceString from './';
+import reactStringReplace from '.';
 
 test("Doesn't throw if not given invalid input", t => {
   t.notThrows(() => replaceString());
@@ -170,3 +171,17 @@ test("Avoids undefined values due to regex", (t) => {
     replaceString(string, /(hey)|(you)/, x => x);
   });
 });
+
+test("Fixed number of string replacements", (t) => { 
+  const string = `Test hey test hey test`;
+  const replacedContent = reactStringReplace(string, 'hey', match => { 
+    return 'lo';
+  },1);
+  t.deepEqual(replacedContent, [
+    'Test ',
+    'lo',
+    ' test ',
+    'hey',
+    ' test'
+  ])
+})
