@@ -95,13 +95,12 @@ module.exports = function reactStringReplace(source, match, fn, count = null) {
 
   return flatten(
     source.map(function (x) {
-      let ret;
+      var ret;
       if (isString(x)) {
         if (Number.isInteger(count) && count > 0) {
           ret = replaceString(x, match, fn, count);
-          count -= (
-            x.match(new RegExp("(" + escapeRegExp(match) + ")", "gi")) || []
-          ).length
+          var re = isRegExp(match) ? match : new RegExp('(' + escapeRegExp(match) + ')', 'gi');
+          count -= (x.match(re) || []).length;
         } else {
           ret = replaceString(x, match, fn, count);
         }
@@ -111,4 +110,4 @@ module.exports = function reactStringReplace(source, match, fn, count = null) {
       return ret;
     }),
   );
-}
+};
