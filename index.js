@@ -83,7 +83,7 @@ function replaceString(str, match, fn, count = null) {
 
     curCharLen = result[i].length;
     curCharStart += result[i - 1].length;
-    result[i] = fn(result[i], i, curCharStart);
+    result[i] = fn(result[i], (i - 1) / 2, curCharStart);
     curCharStart += curCharLen;
   }
 

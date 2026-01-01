@@ -172,9 +172,9 @@ test("Avoids undefined values due to regex", (t) => {
   });
 });
 
-test("Fixed number of string replacements", (t) => { 
+test("Fixed number of string replacements", (t) => {
   const string = `Test hey test hey test`;
-  const replacedContent = reactStringReplace(string, 'hey', match => { 
+  const replacedContent = reactStringReplace(string, 'hey', match => {
     return 'lo';
   },1);
   t.deepEqual(replacedContent, [
@@ -184,4 +184,15 @@ test("Fixed number of string replacements", (t) => {
     'hey',
     ' test'
   ])
-})
+});
+
+test("Indexes start at 0 and are contiguous", t => {
+  const string = 'Hello there general Kenobi';
+  const re = /(\w+)/;
+
+  let expectedIndex = 0;
+  replaceString(string, re, (match, index) => {
+    t.deepEqual(expectedIndex, index);
+    expectedIndex++;
+  });
+});
