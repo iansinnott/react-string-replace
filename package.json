@@ -4,6 +4,7 @@
   "description": "String#replace for React components",
   "license": "MIT",
   "main": "index.js",
+  "sideEffects": false,
   "repository": "iansinnott/react-string-replace",
   "author": {
     "name": "Ian Sinnott",
