@@ -1,68 +1,61 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import test from 'ava';
+import { test, expect } from 'bun:test';
 import replaceString from './';
 import reactStringReplace from '.';
 
-test("Doesn't throw if not given invalid input", t => {
-  t.notThrows(() => replaceString());
-  t.notThrows(() => replaceString(''));
+test("Doesn't throw if not given invalid input", () => {
+  expect(() => replaceString()).not.toThrow();
+  expect(() => replaceString('')).not.toThrow();
 });
 
-test('Returns an array', t => {
-  t.true(Array.isArray(replaceString('blah', 'blah', x => x)));
+test('Returns an array', () => {
+  expect(Array.isArray(replaceString('blah', 'blah', x => x))).toBe(true);
 });
 
-test('Returns correct character offsets', t => {
+test('Returns correct character offsets', () => {
   const correctOffsets = [6, 17];
   const charOffsets = [];
 
   replaceString('Hey there, stranger', 'er', (m, i, o) => charOffsets.push(o));
-  t.deepEqual(charOffsets, correctOffsets);
+  expect(charOffsets).toEqual(correctOffsets);
 });
 
-test('Works with matching groups', t => {
-  t.deepEqual(
-    replaceString('hey there', /(hey)/g, x => ({ worked: x })),
-    ['', { worked: 'hey' }, ' there']
-  );
+test('Works with matching groups', () => {
+  expect(
+    replaceString('hey there', /(hey)/g, x => ({ worked: x }))
+  ).toEqual(['', { worked: 'hey' }, ' there']);
 });
 
-test('Respects global flag to replace multiple matches', t => {
+test('Respects global flag to replace multiple matches', () => {
   const str = 'Hey @ian_sinn and @other_handle, check out this link https://github.com/iansinnott/';
-  t.deepEqual(
-    replaceString(str, /@(\w+)/g, x => ({ worked: x })),
-    ['Hey ', { worked: 'ian_sinn' }, ' and ', { worked: 'other_handle' }, ', check out this link https://github.com/iansinnott/']
-  );
+  expect(
+    replaceString(str, /@(\w+)/g, x => ({ worked: x }))
+  ).toEqual(['Hey ', { worked: 'ian_sinn' }, ' and ', { worked: 'other_handle' }, ', check out this link https://github.com/iansinnott/']);
 });
 
-test('Works with strings', t => {
-  t.deepEqual(
-    replaceString('hey there', 'hey', x => ({ worked: x })),
-    ['', { worked: 'hey' }, ' there']
-  );
+test('Works with strings', () => {
+  expect(
+    replaceString('hey there', 'hey', x => ({ worked: x }))
+  ).toEqual(['', { worked: 'hey' }, ' there']);
 });
 
-test('Works with arrays', t => {
+test('Works with arrays', () => {
   const input = ['hey there', { value: 'you' }, 'again'];
-  t.deepEqual(
-    replaceString(input, 'hey', x => ({ worked: x })),
-    ['', { worked: 'hey' }, ' there', { value: 'you' }, 'again']
-  );
+  expect(
+    replaceString(input, 'hey', x => ({ worked: x }))
+  ).toEqual(['', { worked: 'hey' }, ' there', { value: 'you' }, 'again']);
 });
 
-test('Successfully escapes parens in strings', t => {
-  t.deepEqual(
-    replaceString('(hey) there', '(hey)', x => ({ worked: x })),
-    ['', { worked: '(hey)' }, ' there']
-  );
+test('Successfully escapes parens in strings', () => {
+  expect(
+    replaceString('(hey) there', '(hey)', x => ({ worked: x }))
+  ).toEqual(['', { worked: '(hey)' }, ' there']);
 
-  t.deepEqual(
-    replaceString('hey ((y)(you)) there', '((y)(you))', x => ({ worked: x })),
-    ['hey ', { worked: '((y)(you))' }, ' there']
-  );
+  expect(
+    replaceString('hey ((y)(you)) there', '((y)(you))', x => ({ worked: x }))
+  ).toEqual(['hey ', { worked: '((y)(you))' }, ' there']);
 });
 
-test('Can be called consecutively on returned result of previous call', t => {
+test('Can be called consecutively on returned result of previous call', () => {
   const originalTweet = 'Hey @iansinnott, check out this link https://github.com/iansinnott/ Hope to see you at #reactconf';
   let reactReplacedTweet;
 
@@ -71,7 +64,7 @@ test('Can be called consecutively on returned result of previous call', t => {
     { type: 'url', value: match }
   ));
 
-  t.deepEqual(reactReplacedTweet, [
+  expect(reactReplacedTweet).toEqual([
     'Hey @iansinnott, check out this link ',
     { type: 'url', value: 'https://github.com/iansinnott/' },
     ' Hope to see you at #reactconf',
@@ -82,7 +75,7 @@ test('Can be called consecutively on returned result of previous call', t => {
     { type: 'mention', value: match }
   ));
 
-  t.deepEqual(reactReplacedTweet, [
+  expect(reactReplacedTweet).toEqual([
     'Hey ',
     { type: 'mention', value: '@iansinnott' },
     ', check out this link ',
@@ -95,7 +88,7 @@ test('Can be called consecutively on returned result of previous call', t => {
     { type: 'hashtag', value: match }
   ));
 
-  t.deepEqual(reactReplacedTweet, [
+  expect(reactReplacedTweet).toEqual([
     'Hey ',
     { type: 'mention', value: '@iansinnott' },
     ', check out this link ',
@@ -112,7 +105,7 @@ test('Can be called consecutively on returned result of previous call', t => {
  * ''. This was causing an error where I was checking for !str, even though an
  * empty string should actually be allwed.
  */
-test('Allows empty strings within results', t => {
+test('Allows empty strings within results', () => {
   let replacedContent;
   const string = '@username http://a_photo.jpg';
 
@@ -120,7 +113,7 @@ test('Allows empty strings within results', t => {
     return { key: 'image', match };
   });
 
-  t.deepEqual(replacedContent, [
+  expect(replacedContent).toEqual([
     '@username ',
     { key: 'image', match: 'http://a_photo.jpg' },
     '',
@@ -130,7 +123,7 @@ test('Allows empty strings within results', t => {
     return { key: 'text', match };
   });
 
-  t.deepEqual(replacedContent, [
+  expect(replacedContent).toEqual([
     '',
     { key: 'text', match: 'username' },
     ' ',
@@ -139,13 +132,13 @@ test('Allows empty strings within results', t => {
   ]);
 });
 
-test('Will not through if first element of input is empty string', t => {
+test('Will not throw if first element of input is empty string', () => {
   const string = 'http://a_photo.jpg some string';
   const replacedContent = replaceString(string, /(http?:\/\/.*\.(?:png|jpg))/g, match => {
     return { key: 'image', match };
   });
 
-  t.deepEqual(replacedContent, [
+  expect(replacedContent).toEqual([
     '',
     { key: 'image', match: 'http://a_photo.jpg' },
     ' some string',
@@ -153,46 +146,46 @@ test('Will not through if first element of input is empty string', t => {
 
   // This replacement would not actually give a new result from above, but it is
   // simply to test that passing in an empty string as the first arg is OK
-  t.notThrows(() => {
+  expect(() => {
     replaceString(replacedContent, /@(\w+)/g, match => {
       return { key: 'text', match };
     });
-  });
+  }).not.toThrow();
 });
 
-test("Avoids undefined values due to regex", (t) => {
+test("Avoids undefined values due to regex", () => {
   const string = `hey you there`;
   const re = /(hey)|(you)/;
 
   // Normal splits include undefined if you do this
-  t.deepEqual(string.split(re), ["", "hey", undefined, " ", undefined, "you", " there"]);
+  expect(string.split(re)).toEqual(["", "hey", undefined, " ", undefined, "you", " there"]);
 
-  t.notThrows(() => {
+  expect(() => {
     replaceString(string, /(hey)|(you)/, x => x);
-  });
+  }).not.toThrow();
 });
 
-test("Fixed number of string replacements", (t) => {
+test("Fixed number of string replacements", () => {
   const string = `Test hey test hey test`;
   const replacedContent = reactStringReplace(string, 'hey', match => {
     return 'lo';
-  },1);
-  t.deepEqual(replacedContent, [
+  }, 1);
+  expect(replacedContent).toEqual([
     'Test ',
     'lo',
     ' test ',
     'hey',
     ' test'
-  ])
+  ]);
 });
 
-test("Indexes start at 0 and are contiguous", t => {
+test("Indexes start at 0 and are contiguous", () => {
   const string = 'Hello there general Kenobi';
   const re = /(\w+)/;
 
   let expectedIndex = 0;
   replaceString(string, re, (match, index) => {
-    t.deepEqual(expectedIndex, index);
+    expect(index).toEqual(expectedIndex);
     expectedIndex++;
   });
 });

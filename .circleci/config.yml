@@ -1,7 +1,0 @@
-orbs:
-  node: circleci/node@5.0.1
-
-workflows:
-    example-workflow:
-      jobs:
-        - node/test
