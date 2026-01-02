@@ -9,18 +9,21 @@ A simple way to safely do string replacement with React components. Zero depende
 ## Install
 
 ```sh
+npm install react-string-replace
+# or
 yarn add react-string-replace
+# or
+bun add react-string-replace
 ```
-
 
 ## Usage
 
 First, import the lib. Both `require` and `import` are supported.
 
 ```js
-import reactStringReplace from 'react-string-replace';
+import reactStringReplace from "react-string-replace";
 // OR
-const reactStringReplace = require('react-string-replace')
+const reactStringReplace = require("react-string-replace");
 ```
 
 Examples will use `import` since it is more common in the React ecosystem.
@@ -34,15 +37,6 @@ reactStringReplace('whats your name', 'your', (match, i) => (
   <span>{match}</span>
 ));
 // => [ 'whats ', <span>your</span>, ' name' ]
-
-
-// Note that indexing [i] here starts at 1, not 0
-// If you need to change this behavior for now try the workaround: 
-let count = -1;
-reactStringReplace("the more the better", "the", (match, i) => (
-  count ++
-  <span>{match}</span>
-));
 ```
 
 ### More realistic example
@@ -50,8 +44,10 @@ reactStringReplace("the more the better", "the", (match, i) => (
 Highlight all digits within a string by surrounding them in span tags:
 
 ```js
-reactStringReplace('Apt 111, phone number 5555555555.', /(\d+)/g, (match, i) => (
-  <span key={i} style={{ color: 'red' }}>{match}</span>
+reactStringReplace("Apt 111, phone number 5555555555.", /(\d+)/g, (match, i) => (
+  <span key={i} style={{ color: "red" }}>
+    {match}
+  </span>
 ));
 // =>
 // [
@@ -65,21 +61,21 @@ reactStringReplace('Apt 111, phone number 5555555555.', /(\d+)/g, (match, i) => 
 
 ### Within a React component
 
-```js
-import reactStringReplace from 'react-string-replace';
+```jsx
+import reactStringReplace from "react-string-replace";
 
-const HighlightNumbers = React.createClass({
-  render() {
-    const content = 'Hey my number is 555-555-5555.';
-    return (
-      <div>
-        {reactStringReplace(content, /(\d+)/g, (match, i) => (
-          <span key={i} style={{ color: 'red' }}>{match}</span>
-        ))}
-      </div>
-    );
-  },
-});
+function HighlightNumbers() {
+  const content = "Hey my number is 555-555-5555.";
+  return (
+    <div>
+      {reactStringReplace(content, /(\d+)/g, (match, i) => (
+        <span key={i} style={{ color: "red" }}>
+          {match}
+        </span>
+      ))}
+    </div>
+  );
+}
 ```
 
 ### Multiple replacements on a single string
@@ -87,24 +83,31 @@ const HighlightNumbers = React.createClass({
 You can run multiple replacements on one string by calling the function multiple times on the returned result. For instance, if we want to match URLs, @-mentions and hashtags in a string we could do the following:
 
 ```js
-import reactStringReplace from 'react-string-replace';
+import reactStringReplace from "react-string-replace";
 
-const text = 'Hey @ian_sinn, check out this link https://github.com/iansinnott/ Hope to see you at #reactconf';
+const text =
+  "Hey @ian_sinn, check out this link https://github.com/iansinnott/ Hope to see you at #reactconf";
 let replacedText;
 
 // Match URLs
 replacedText = reactStringReplace(text, /(https?:\/\/\S+)/g, (match, i) => (
-  <a key={match + i} href={match}>{match}</a>
+  <a key={match + i} href={match}>
+    {match}
+  </a>
 ));
 
 // Match @-mentions
 replacedText = reactStringReplace(replacedText, /@(\w+)/g, (match, i) => (
-  <a key={match + i} href={`https://twitter.com/${match}`}>@{match}</a>
+  <a key={match + i} href={`https://twitter.com/${match}`}>
+    @{match}
+  </a>
 ));
 
 // Match hashtags
 replacedText = reactStringReplace(replacedText, /#(\w+)/g, (match, i) => (
-  <a key={match + i} href={`https://twitter.com/hashtag/${match}`}>#{match}</a>
+  <a key={match + i} href={`https://twitter.com/hashtag/${match}`}>
+    #{match}
+  </a>
 ));
 
 // => [
@@ -142,14 +145,14 @@ The string or array you would like to do replacement on.
 
 Type: `regexp|string`
 
-The string or RegExp you would like to replace within `string`. 
+The string or RegExp you would like to replace within `string`.
 
 **NOTE:** When using a `RegExp` you **MUST** include a capturing group. (`/(hey)/g` is ok, `/hey/g` is not.)
 
 Example: Replace all occurrences of `'hey'` with `<span>hey</span>`
 
 ```js
-reactStringReplace('hey hey you', /(hey)/g, () => <span>hey</span>);
+reactStringReplace("hey hey you", /(hey)/g, () => <span>hey</span>);
 ```
 
 #### replacementFunction
@@ -160,26 +163,28 @@ The replacer function to run each time `match` is found. This function will be p
 
 ```js
 const replacementFunction = (match, index, offset) => <span key={index}>{match}</span>;
-reactStringReplace('hey hey you', /(hey)/g, replacementFunction);
+reactStringReplace("hey hey you", /(hey)/g, replacementFunction);
 ```
 
 #### count
 
 Type: `number`
 
-The number of substitutions to perform - for example if `count` is 1, then only the first occurrence of the string will be replaced. 
+The number of substitutions to perform - for example if `count` is 1, then only the first occurrence of the string will be replaced.
 
 Example: Replace first occurrence of `'hey'` with `<span>hey</span>`
 
 ```js
-reactStringReplace('hey hey you', 'hey', () => <span>hey</span>, 1)
+reactStringReplace("hey hey you", "hey", () => <span>hey</span>, 1);
 ```
 
 ## API Stability
 
-With v1.0.0 the API is considered stable and should be considered production ready. Pull requests are still welcome but there is currently no intent to make changes to this lib other than bug fixes (please submit an issue if you find something!).
+The API is stable and production ready.
 
-For details on API tests see [the tests file](./test.js).
+**v2.0.0 Breaking Change:** The `index` parameter passed to the replacement function now starts at 0 and increments by 1 (previously it started at 1 and incremented by 2).
+
+For details on API tests see [the tests file](./index.test.js).
 
 ## License
 
